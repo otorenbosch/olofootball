@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OLO Football — Privé voetbaltraining Appingedam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:      #0D0A22;
+    --void-2:    #171240;
+    --panel:     #1D1850;
+    --line:      #322A6E;
+    --gold:      #FFD447;
+    --mint:      #6EF3C5;
+    --pink:      #FF5FA2;
+    --paper:     #F6F4FF;
+    --grey:      #ABA4D9;
+    --max: 1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -5%, rgba(255,212,71,.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 5% 30%, rgba(110,243,197,.10), transparent 60%),
+      var(--void);
+    color:var(--paper);
+    font-family:'Inter', system-ui, sans-serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Rajdhani', system-ui, sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    line-height:1.05;
+    margin:0 0 .3em;
+    color:var(--paper);
+  }
+  p{margin:0 0 1em;color:var(--grey);}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:3px solid var(--mint);outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+  /* ---------- HEADER ---------- */
+  header{position:sticky;top:0;z-index:30;background:rgba(13,10,34,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Rajdhani';font-weight:700;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em;color:var(--paper);}
+  .brand .dot{width:10px;height:10px;background:var(--gold);border-radius:2px;transform:rotate(45deg);}
+  nav{display:flex;gap:26px;}
+  nav a{color:var(--grey);text-decoration:none;font-weight:600;font-size:.92rem;}
+  nav a:hover{color:var(--gold);}
+  @media (max-width:760px){nav{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:64px 0 80px;border-bottom:1px solid var(--line);}
+  .hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:center;}
+  @media (max-width:900px){.hero .wrap{grid-template-columns:1fr;}}
+
+  .tag-pill{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);color:var(--mint);font-weight:600;font-size:.82rem;padding:6px 14px;border-radius:100px;margin-bottom:20px;}
+  .tag-pill::before{content:"●";font-size:.6rem;color:var(--mint);}
+  .hero h1{font-size:clamp(2.4rem,5vw,3.4rem);max-width:11ch;}
+  .hero p.lead{max-width:40ch;font-size:1.1rem;margin-top:14px;}
+  .hero-actions{display:flex;align-items:center;gap:22px;margin-top:30px;flex-wrap:wrap;}
+  .btn-glow{
+    background:var(--gold);color:var(--void);
+    font-family:'Rajdhani';font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    font-size:1.05rem;padding:15px 32px;border:none;border-radius:6px;text-decoration:none;display:inline-block;
+    box-shadow:0 0 0 1px rgba(255,212,71,.4), 0 8px 24px rgba(255,212,71,.25);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-glow:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(255,212,71,.6), 0 12px 30px rgba(255,212,71,.35);}
+  .link-ghost{font-weight:600;text-decoration:none;color:var(--paper);border-bottom:2px solid var(--line);padding-bottom:3px;}
+  .link-ghost:hover{border-color:var(--mint);color:var(--mint);}
+
+  /* ---------- PLAYER CARD ---------- */
+  .card-wrap{display:flex;justify-content:center;}
+  .fut-card{
+    position:relative;width:300px;
+    background:
+      linear-gradient(155deg, #FFF3C4 0%, #FFD447 22%, #B8860B 48%, #FFD447 68%, #FFF3C4 100%);
+    border-radius:22px;
+    padding:22px 20px 26px;
+    box-shadow:0 30px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.4);
+    color:#3A2A05;
+  }
+  .fut-card::before{
+    content:"";position:absolute;inset:0;border-radius:22px;
+    background:repeating-linear-gradient(115deg, rgba(255,255,255,.35) 0 2px, transparent 2px 26px);
+    mix-blend-mode:overlay;pointer-events:none;
+  }
+  .fut-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+  .fut-ovr{font-family:'Rajdhani';font-weight:700;line-height:.85;}
+  .fut-ovr .n{font-size:2.6rem;display:block;}
+  .fut-ovr .p{font-size:.95rem;letter-spacing:.03em;}
+  .fut-flag{font-family:'Rajdhani';font-weight:700;font-size:.75rem;background:rgba(58,42,5,.15);padding:4px 8px;border-radius:4px;}
+  .fut-photo{position:relative;z-index:1;margin:6px auto 4px;width:190px;height:190px;border-radius:14px;overflow:hidden;background:#8a6a10;}
+  .fut-photo img{width:100%;height:100%;object-fit:cover;filter:sepia(.35) saturate(1.3) contrast(1.05);}
+  .fut-name{position:relative;z-index:1;text-align:center;font-family:'Rajdhani';font-weight:700;font-size:1.35rem;letter-spacing:.02em;margin-bottom:2px;}
+  .fut-role{position:relative;z-index:1;text-align:center;font-size:.78rem;font-weight:600;letter-spacing:.08em;margin-bottom:14px;opacity:.75;}
+  .fut-stats{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;border-top:1px solid rgba(58,42,5,.25);padding-top:12px;}
+  .fut-stat{display:flex;justify-content:space-between;font-family:'Rajdhani';font-weight:700;font-size:.95rem;}
+  .fut-stat span:last-child{opacity:.65;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:80px 0;}
+  .section-head{max-width:60ch;margin-bottom:44px;}
+  .section-head .eyebrow{color:var(--mint);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:block;}
+  .section-head h2{font-size:clamp(2rem,4vw,2.6rem);}
+  .section-head p{font-size:1.05rem;margin:0;}
+
+  /* ---------- GAME MODE SELECT ---------- */
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:780px){.modes{grid-template-columns:1fr;}}
+  .mode{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:30px 26px;position:relative;overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .mode:hover{border-color:var(--gold);transform:translateY(-4px);}
+  .mode .badge{
+    display:inline-block;font-family:'Rajdhani';font-weight:700;font-size:.78rem;
+    color:var(--void);background:var(--mint);padding:4px 10px;border-radius:5px;margin-bottom:16px;
+  }
+  .mode h3{font-size:1.5rem;margin-bottom:.2em;}
+  .mode p{font-size:.96rem;margin:0;}
+
+  /* ---------- LEVEL PATH (5 rounds) ---------- */
+  .levelpath{display:flex;flex-direction:column;gap:0;border-left:2px dashed var(--line);margin-left:22px;}
+  .round{position:relative;padding:0 0 44px 42px;}
+  .round:last-child{padding-bottom:0;}
+  .round::before{
+    content:attr(data-n);
+    position:absolute;left:-23px;top:-4px;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--void-2);border:2px solid var(--gold);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Rajdhani';font-weight:700;font-size:1.1rem;
+  }
+  .round h3{font-size:1.2rem;margin-bottom:.15em;}
+  .round p{margin:0;font-size:.95rem;}
+  .round .dur{font-family:'Rajdhani';font-weight:700;color:var(--mint);font-size:.85rem;margin-bottom:4px;display:block;}
+
+  /* ---------- ACHIEVEMENTS (diplomas) ---------- */
+  .achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media (max-width:780px){.achievements{grid-template-columns:1fr;}}
+  .ach{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 20px;}
+  .ach .unlocked{font-family:'Rajdhani';font-weight:700;font-size:.72rem;letter-spacing:.08em;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .ach .unlocked::before{content:"★";}
+  .ach p{margin:0;font-size:.95rem;color:var(--paper);font-weight:500;}
+
+  /* ---------- GALLERY (replays) ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:780px){.gallery{grid-template-columns:1fr;}}
+  .replay{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;}
+  .replay img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.05);}
+  .replay .hud{position:absolute;top:10px;left:10px;background:rgba(13,10,34,.75);border:1px solid var(--mint);color:var(--mint);font-family:'Rajdhani';font-weight:700;font-size:.72rem;letter-spacing:.05em;padding:3px 9px;border-radius:4px;}
+  .replay .corner{position:absolute;width:16px;height:16px;border-color:var(--gold);opacity:.85;}
+  .replay .tl{top:8px;left:8px;border-top:2px solid;border-left:2px solid;}
+  .replay .br{bottom:8px;right:8px;border-bottom:2px solid;border-right:2px solid;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:linear-gradient(180deg, var(--void-2), var(--void));border-top:1px solid var(--line);}
+  .contact .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;}
+  @media (max-width:780px){.contact .wrap{grid-template-columns:1fr;}}
+  .panel-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 28px;}
+  .field-label{font-family:'Rajdhani';font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mint);margin-bottom:4px;}
+  .field-value{font-size:1.15rem;font-weight:600;margin-bottom:20px;color:var(--paper);}
+  .field-value a{text-decoration:none;color:var(--paper);border-bottom:2px solid var(--gold);}
+  .social-row{display:flex;gap:16px;font-weight:600;font-size:.92rem;}
+  .social-row a{text-decoration:none;color:var(--paper);border-bottom:2px solid var(--line);}
+  .social-row a:hover{border-color:var(--mint);color:var(--mint);}
+  .note{background:rgba(255,95,162,.08);border:1px dashed var(--pink);border-radius:10px;padding:18px 20px;font-size:.92rem;color:#F3CFE0;}
+  .note strong{display:block;color:var(--pink);font-family:'Rajdhani';font-weight:700;letter-spacing:.03em;margin-bottom:6px;font-size:1rem;text-transform:uppercase;}
+
+  footer{background:var(--void);color:#5C5490;padding:24px 0;font-size:.85rem;border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+</style>
+</head>
+<body>
+<div id="concept-switcher" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;align-items:center;background:rgba(10,24,38,.92);border:1px solid #22475F;border-radius:999px;padding:6px 8px;font-family:system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.35);backdrop-filter:blur(6px);">
+  <a href="index.html" style="color:#9FB3C2;font-size:12px;text-decoration:none;padding:4px 8px;">Overzicht</a>
+  <a href="concept-a.html" data-concept="a" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">A</a>
+  <a href="concept-b.html" data-concept="b" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">B</a>
+  <a href="concept-c.html" data-concept="c" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">C</a>
+  <a href="concept-d.html" data-concept="d" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">D</a>
+</div>
+<script data-current="c">
+(function(){
+  var current = document.currentScript && document.currentScript.getAttribute('data-current');
+  document.querySelectorAll('#concept-switcher a[data-concept]').forEach(function(a){
+    if(a.getAttribute('data-concept') === current){
+      a.style.background = '#23B4F0';
+      a.style.color = '#0A1826';
+      a.style.fontWeight = '700';
+    }
+  });
+})();
+</script>
+
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="dot"></span>OLO Football</a>
+    <nav>
+      <a href="#modes">Trainingen</a>
+      <a href="#rounds">De training</a>
+      <a href="#olav">Olav</a>
+      <a href="#fotos">Foto's</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="tag-pill">Appingedam &amp; omgeving</span>
+      <h1>Level up je voetbal</h1>
+      <p class="lead">Privétraining, 1-op-1 of met een klein groepje. Elke sessie is gericht op jouw volgende stap.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-glow">Meld je aan</a>
+        <a href="#modes" class="link-ghost">Bekijk de trainingen</a>
+      </div>
+    </div>
+    <div class="card-wrap">
+      <div class="fut-card">
+        <div class="fut-top">
+          <div class="fut-ovr"><span class="n">92</span><span class="p">TRAINER</span></div>
+          <div class="fut-flag">OLO · NL</div>
+        </div>
+        <div class="fut-photo"><img src="photos/cones.jpg" alt="Olav Oosterhuis"></div>
+        <div class="fut-name">Olav Oosterhuis</div>
+        <div class="fut-role">Privétrainer — Appingedam</div>
+        <div class="fut-stats">
+          <div class="fut-stat"><span>93</span><span>Techniek</span></div>
+          <div class="fut-stat"><span>90</span><span>Tactiek</span></div>
+          <div class="fut-stat"><span>95</span><span>Motivatie</span></div>
+          <div class="fut-stat"><span>88</span><span>Geduld</span></div>
+          <div class="fut-stat"><span>94</span><span>Energie</span></div>
+          <div class="fut-stat"><span>89</span><span>Flexibel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Kies je modus</span>
+      <h2>Drie manieren om te trainen</h2>
+      <p>Alleen, samen met een vriend of vriendin, of met een klein groepje — elke modus wordt op maat ingevuld.</p>
+    </div>
+    <div class="modes">
+      <div class="mode">
+        <span class="badge">Solo</span>
+        <h3>1-op-1</h3>
+        <p>Volledig afgestemd op jouw doelen, niveau en tempo. Alle aandacht is voor jou.</p>
+      </div>
+      <div class="mode">
+        <span class="badge">Co-op</span>
+        <h3>Duo</h3>
+        <p>Motiverend en leerzaam — jij en een trainingsmaatje halen het beste uit elkaar.</p>
+      </div>
+      <div class="mode">
+        <span class="badge">Squad</span>
+        <h3>Groep (4-6)</h3>
+        <p>Uitdagende, effectieve trainingen voor een klein team van vier tot zes spelers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rounds" style="background:var(--void-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Vijf ronden, 60 minuten</span>
+      <h2>Zo verloopt een training</h2>
+      <p>Elke training doorloopt dezelfde vaste opbouw.</p>
+    </div>
+    <div class="levelpath">
+      <div class="round" data-n="1"><span class="dur">0 – 10 min</span><h3>Warming-up</h3><p>Rustig opbouwen naar volle intensiteit.</p></div>
+      <div class="round" data-n="2"><span class="dur">10 – 25 min</span><h3>Techniek</h3><p>Gericht werken aan balvaardigheid.</p></div>
+      <div class="round" data-n="3"><span class="dur">25 – 45 min</span><h3>Praktijk</h3><p>Toepassen in echte spelsituaties.</p></div>
+      <div class="round" data-n="4"><span class="dur">45 – 55 min</span><h3>Verbeterpunten</h3><p>Concrete feedback, direct toepasbaar.</p></div>
+      <div class="round" data-n="5"><span class="dur">55 – 60 min</span><h3>Cooling down</h3><p>Rustig afsluiten van de training.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="olav">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Achievements</span>
+      <h2>Unlocked door Olav</h2>
+      <p>19 jaar, 4 jaar ervaring als trainer.</p>
+    </div>
+    <div class="achievements">
+      <div class="ach"><div class="unlocked">Unlocked</div><p>Sport- en Bewegingsleider niveau 4</p></div>
+      <div class="ach"><div class="unlocked">Unlocked</div><p>Conditie- en hersteltrainer / looptrainer</p></div>
+      <div class="ach"><div class="unlocked">Unlocked</div><p>Voetbaltrainer/coach KNVB (8–12 jaar)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fotos" style="background:var(--void-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Replays</span>
+      <h2>Op het veld</h2>
+      <p>Beelden van eerdere trainingen.</p>
+    </div>
+    <div class="gallery">
+      <div class="replay"><img src="photos/huddle.jpg" alt="Groep speelsters rond de training verzameld"><span class="hud">REPLAY 01</span><span class="corner tl"></span><span class="corner br"></span></div>
+      <div class="replay"><img src="photos/cones.jpg" alt="Olav zet pionnen neer tijdens een training"><span class="hud">REPLAY 02</span><span class="corner tl"></span><span class="corner br"></span></div>
+      <div class="replay"><img src="photos/goal.jpg" alt="Training bij het doel op het veld"><span class="hud">REPLAY 03</span><span class="corner tl"></span><span class="corner br"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <div class="section-head">
+        <span class="eyebrow">Join the squad</span>
+        <h2>Klaar voor je eerste training?</h2>
+        <p>Interesse in 1-op-1, duo- of groepstraining in Appingedam en omgeving? Meld je aan.</p>
+      </div>
+      <div class="note">
+        <strong>Nog te unlocken</strong>
+        Vaste prijzen per sessie/pakket, of "prijs op aanvraag"? En de links naar Instagram, YouTube en TikTok.
+      </div>
+    </div>
+    <div class="panel-card">
+      <div class="field-label">E-mail</div>
+      <div class="field-value"><a href="mailto:info@olofootball.nl">info@olofootball.nl</a></div>
+      <div class="field-label">Locatie</div>
+      <div class="field-value">DVC Appingedam</div>
+      <div class="field-label">Volg OLO Football</div>
+      <div class="social-row">
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>OLO Football — Appingedam &amp; omgeving</span>
+    <span>Concept C</span>
+  </div>
+</footer>
+
+</body>
+</html>

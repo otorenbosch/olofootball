@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OLO Football — Persoonlijke voetbaltraining Appingedam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:       #0A1826;
+    --navy-2:     #0F2436;
+    --panel:      #132C42;
+    --line:       #22475F;
+    --blue:       #23B4F0;
+    --blue-dim:   #1690C4;
+    --white:      #F3F8FB;
+    --grey:       #9FB3C2;
+    --max: 1100px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--white);
+    font-family:'Inter', system-ui, sans-serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Barlow Condensed', system-ui, sans-serif;
+    font-weight:700;
+    line-height:1.02;
+    letter-spacing:.01em;
+    margin:0 0 .35em;
+    color:var(--white);
+  }
+  p{margin:0 0 1em;color:var(--grey);}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+  /* ---------- HEADER ---------- */
+  header{position:sticky;top:0;z-index:20;background:rgba(10,24,38,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .brand{display:flex;flex-direction:column;line-height:.95;text-decoration:none;}
+  .brand .olo{font-family:'Barlow Condensed';font-weight:800;font-size:1.7rem;color:var(--white);letter-spacing:.02em;}
+  .brand .olo b{color:var(--blue);}
+  .brand .sub{font-size:.6rem;letter-spacing:.28em;color:var(--grey);margin-top:2px;}
+  nav{display:flex;gap:30px;}
+  nav a{color:var(--white);text-decoration:none;font-size:.95rem;border-bottom:2px solid transparent;padding-bottom:4px;}
+  nav a:hover{border-color:var(--blue);}
+  @media (max-width:700px){nav{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse at 78% 20%, rgba(35,180,240,.16), transparent 55%),
+      linear-gradient(180deg, var(--navy-2), var(--navy) 70%);
+    padding:80px 0 96px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:start;}
+  @media (max-width:820px){.hero .wrap{grid-template-columns:1fr;}}
+  .eyebrow{color:var(--blue);font-weight:600;font-size:.95rem;font-family:'Barlow Condensed';letter-spacing:.06em;margin-bottom:10px;}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,2.9rem);max-width:14ch;}
+  .hero h1 .accent{color:var(--blue);}
+  .hero p.lead{max-width:44ch;font-size:1.12rem;margin-top:14px;}
+  .hero-actions{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap;}
+  .btn{display:inline-block;font-family:'Barlow Condensed';font-weight:700;font-size:1.05rem;letter-spacing:.02em;padding:14px 30px;text-decoration:none;border-radius:3px;transition:transform .15s ease, background .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--blue);color:var(--navy);}
+  .btn-primary:hover{background:#3fc4fa;}
+  .btn-ghost{background:transparent;color:var(--white);border:1.5px solid var(--line);}
+
+  .traits{display:flex;flex-direction:column;gap:22px;padding-top:6px;}
+  .trait{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;}
+  .trait .ic{width:40px;height:40px;color:var(--blue);}
+  .trait h3{font-size:1.05rem;font-family:'Inter';font-weight:600;color:var(--white);margin:0 0 .2em;text-transform:none;}
+  .trait p{font-size:.94rem;margin:0;}
+  .traits-head{font-size:1.05rem;color:var(--grey);margin-bottom:18px;}
+  .traits-head b{color:var(--white);}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:60ch;margin-bottom:42px;}
+  .section-head h2{font-size:clamp(1.7rem,3.2vw,2.3rem);}
+  .section-head p{font-size:1.05rem;margin:0;}
+
+  /* ---------- TRAININGSVORMEN ---------- */
+  .forms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media (max-width:760px){.forms-grid{grid-template-columns:1fr;}}
+  .form-card{background:var(--navy-2);padding:32px 28px;}
+  .form-card .count{font-family:'Barlow Condensed';font-weight:800;font-size:1.5rem;color:var(--blue);margin-bottom:10px;}
+  .form-card h3{font-size:1.35rem;margin-bottom:.15em;}
+  .form-card .tag{font-size:.85rem;color:var(--grey);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .form-card p{font-size:.96rem;margin:0;}
+
+  /* ---------- OVER DE TRAINING ---------- */
+  .training-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;}
+  @media (max-width:820px){.training-wrap{grid-template-columns:1fr;}}
+  .steps{counter-reset:step;border-top:1px solid var(--line);}
+  .step{counter-increment:step;display:grid;grid-template-columns:44px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);}
+  .step::before{content:counter(step);font-family:'Barlow Condensed';font-weight:800;font-size:1.4rem;color:var(--blue);line-height:1.3;}
+  .step h3{font-size:1.1rem;margin-bottom:.15em;}
+  .step p{margin:0;font-size:.94rem;}
+  .facts{display:flex;flex-direction:column;gap:20px;}
+  .fact{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:18px;background:var(--panel);border:1px solid var(--line);}
+  .fact .ic{width:24px;height:24px;color:var(--blue);}
+  .fact h3{font-size:1rem;font-family:'Inter';font-weight:600;margin:0 0 .2em;color:var(--white);}
+  .fact p{margin:0;font-size:.92rem;}
+
+  /* ---------- TRAINER ---------- */
+  .trainer{background:var(--navy-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .trainer .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start;}
+  @media (max-width:760px){.trainer .wrap{grid-template-columns:1fr;}}
+  .trainer-photo{aspect-ratio:3/4;background:linear-gradient(160deg,var(--panel),var(--navy));border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--grey);font-size:.9rem;padding:16px;}
+  .trainer-name{font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:6px;font-family:'Barlow Condensed';font-weight:600;}
+  .trainer h2{font-size:2rem;margin-bottom:.15em;}
+  .trainer .meta{color:var(--grey);font-size:.98rem;margin-bottom:20px;}
+  .dipl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .dipl li{display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:.96rem;color:var(--white);align-items:start;}
+  .dipl li::before{content:"✓";color:var(--blue);font-weight:700;}
+
+  /* ---------- FOTO'S ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  @media (max-width:760px){.gallery{grid-template-columns:1fr;}}
+  .shot{aspect-ratio:3/4;background:linear-gradient(160deg,var(--panel),var(--navy-2));border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:var(--grey);font-size:.85rem;overflow:hidden;}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:linear-gradient(180deg,var(--navy-2),var(--navy));}
+  .contact .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;}
+  @media (max-width:760px){.contact .wrap{grid-template-columns:1fr;}}
+  .contact h2{font-size:2rem;}
+  .contact-block{margin-bottom:22px;}
+  .contact-block .label{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);font-family:'Barlow Condensed';font-weight:600;margin-bottom:6px;}
+  .contact-block a.value{color:var(--white);font-size:1.15rem;text-decoration:none;border-bottom:1px solid var(--line);}
+  .contact-block a.value:hover{border-color:var(--blue);}
+  .social{display:flex;gap:18px;margin-top:8px;}
+  .social a{color:var(--grey);text-decoration:none;font-size:.92rem;border-bottom:1px solid transparent;}
+  .social a:hover{color:var(--blue);border-color:var(--blue);}
+  .todo{border:1px dashed var(--blue-dim);background:rgba(35,180,240,.07);padding:16px 18px;border-radius:3px;font-size:.9rem;color:#BEE6F7;}
+  .todo strong{display:block;color:var(--blue);margin-bottom:4px;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.02em;}
+
+  footer{background:var(--navy);border-top:1px solid var(--line);padding:26px 0;font-size:.85rem;color:var(--grey);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+</style>
+</head>
+<body>
+<div id="concept-switcher" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;align-items:center;background:rgba(10,24,38,.92);border:1px solid #22475F;border-radius:999px;padding:6px 8px;font-family:system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.35);backdrop-filter:blur(6px);">
+  <a href="index.html" style="color:#9FB3C2;font-size:12px;text-decoration:none;padding:4px 8px;">Overzicht</a>
+  <a href="concept-a.html" data-concept="a" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">A</a>
+  <a href="concept-b.html" data-concept="b" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">B</a>
+  <a href="concept-c.html" data-concept="c" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">C</a>
+  <a href="concept-d.html" data-concept="d" style="color:#F3F8FB;font-size:12px;text-decoration:none;padding:4px 9px;border-radius:999px;">D</a>
+</div>
+<script data-current="a">
+(function(){
+  var current = document.currentScript && document.currentScript.getAttribute('data-current');
+  document.querySelectorAll('#concept-switcher a[data-concept]').forEach(function(a){
+    if(a.getAttribute('data-concept') === current){
+      a.style.background = '#23B4F0';
+      a.style.color = '#0A1826';
+      a.style.fontWeight = '700';
+    }
+  });
+})();
+</script>
+
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="olo">OL<b>O</b></span>
+      <span class="sub">FOOTBALL</span>
+    </a>
+    <nav>
+      <a href="#vormen">Trainingsvormen</a>
+      <a href="#training">De training</a>
+      <a href="#trainer">Over Olav</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Appingedam &amp; omgeving</p>
+      <h1>Persoonlijke voetbaltraining, <span class="accent">1-op-1</span></h1>
+      <p class="lead">Individuele begeleiding op het veld. Slimmer aan de bal, meer resultaat.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Meld je aan</a>
+        <a href="#vormen" class="btn btn-ghost">Trainingsvormen</a>
+      </div>
+    </div>
+    <div>
+      <p class="traits-head"><b>Meer dan alleen techniek.</b></p>
+      <div class="traits">
+        <div class="trait">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+          <div><h3>Gepassioneerd</h3><p>Ik haal het beste uit jou, met enthousiasme en plezier.</p></div>
+        </div>
+        <div class="trait">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="17" cy="5" r="2"/><path d="M9 21l2-7 3 2 2 5M6 12l3-3 3 1 3-3"/></svg>
+          <div><h3>Energiek</h3><p>Met volle energie en doorzettingsvermogen.</p></div>
+        </div>
+        <div class="trait">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+          <div><h3>Actief</h3><p>Samen werken we aan jouw doelen, stap voor stap.</p></div>
+        </div>
+        <div class="trait">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 12l3 3 7-7"/><path d="M4 16v-3a2 2 0 0 1 2-2h2M20 16v-3a2 2 0 0 0-2-2h-2"/></svg>
+          <div><h3>Betrokken</h3><p>Jouw ontwikkeling staat centraal — ik ben er echt voor je.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vormen">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Trainingsvormen</h2>
+      <p>Alleen, samen met een vriend of vriendin, of met een klein groepje — kies wat het beste bij je past.</p>
+    </div>
+    <div class="forms-grid">
+      <div class="form-card">
+        <div class="tag">1-op-1</div>
+        <h3>Persoonlijke aandacht</h3>
+        <p>Volledig afgestemd op jouw doelen, niveau en tempo.</p>
+      </div>
+      <div class="form-card">
+        <div class="tag">Duo</div>
+        <h3>Samen trainen</h3>
+        <p>Motiverend en leerzaam. Jullie halen het beste uit elkaar.</p>
+      </div>
+      <div class="form-card">
+        <div class="tag">Groep 4–6</div>
+        <h3>Samen beter worden</h3>
+        <p>Effectieve en uitdagende trainingen voor kleine groepen (4 tot 6 personen).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="training">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Zo ziet een training eruit</h2>
+      <p>De trainingen zijn structureel verdeeld in 5 onderdelen.</p>
+    </div>
+    <div class="training-wrap">
+      <div class="steps">
+        <div class="step"><div><h3>Warming-up</h3><p>Rustig opbouwen naar volle intensiteit.</p></div></div>
+        <div class="step"><div><h3>Techniek</h3><p>Gericht werken aan balvaardigheid en basistechniek.</p></div></div>
+        <div class="step"><div><h3>Praktijk</h3><p>Het geleerde toepassen in realistische spelsituaties.</p></div></div>
+        <div class="step"><div><h3>Verbeterpunten</h3><p>Concrete feedback op wat er goed ging en wat scherper kan.</p></div></div>
+        <div class="step"><div><h3>Cooling down</h3><p>Rustig afsluiten van de training.</p></div></div>
+      </div>
+      <div class="facts">
+        <div class="fact">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div><h3>Duur</h3><p>Een training duurt 60 minuten.</p></div>
+        </div>
+        <div class="fact">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          <div><h3>Locatie</h3><p>De trainingen vinden plaats op het veld bij DVC Appingedam.</p></div>
+        </div>
+        <div class="fact">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.6 6.6L21 9l-5 4.6L17.4 21 12 17.3 6.6 21 8 13.6 3 9l6.4-.4z"/></svg>
+          <div><h3>Op maat</h3><p>Iedere training is gericht op jouw persoonlijke ontwikkeling en groei.</p></div>
+        </div>
+        <div class="fact">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2l.4 2.6h4.4l.4-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>
+          <div><h3>Materialen</h3><p>De trainingen worden verzorgd met professionele materialen.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trainer" id="trainer">
+  <div class="wrap">
+    <div class="trainer-photo">foto van Olav<br>(nog toe te voegen)</div>
+    <div>
+      <p class="trainer-name">Trainer</p>
+      <h2>Olav Oosterhuis</h2>
+      <p class="meta">19 jaar &nbsp;·&nbsp; 4 jaar ervaring als trainer</p>
+      <ul class="dipl">
+        <li>Sport- en Bewegingsleider niveau 4</li>
+        <li>Conditie- en hersteltrainer / looptrainer</li>
+        <li>Voetbaltrainer/coach KNVB (8–12 jaar)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>In actie</h2>
+      <p>Hier komen foto's van trainingen te staan.</p>
+    </div>
+    <div class="gallery">
+      <div class="shot"><img src="photos/cones.jpg" alt="Olav zet pionnen neer tijdens een training" loading="lazy"></div>
+      <div class="shot"><img src="photos/goal.jpg" alt="Training bij het doel op het veld" loading="lazy"></div>
+      <div class="shot"><img src="photos/huddle.jpg" alt="Groep speelsters rond de training verzameld" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Meld je aan</h2>
+      <p>Interesse in 1-op-1, duo- of groepstraining? Neem contact op.</p>
+      <div class="contact-block">
+        <div class="label">E-mail</div>
+        <a class="value" href="mailto:info@olofootball.nl">info@olofootball.nl</a>
+      </div>
+      <div class="contact-block">
+        <div class="label">Locatie</div>
+        <span class="value" style="border:none;">DVC Appingedam</span>
+      </div>
+      <div class="contact-block">
+        <div class="label">Volg OLO Football</div>
+        <div class="social">
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>Tarieven</h2>
+      <p>Tarieven worden binnenkort toegevoegd.</p>
+      <div class="todo">
+        <strong>Nog in te vullen</strong>
+        Vaste prijzen per sessie/pakket, of "prijs op aanvraag"? En de exacte links naar Instagram, YouTube en TikTok.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>OLO Football — Appingedam &amp; omgeving</span>
+    <span>Concept website</span>
+  </div>
+</footer>
+
+</body>
+</html>
