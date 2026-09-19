@@ -145,6 +145,44 @@
   .note{background:rgba(111,163,204,.08);border:1px dashed var(--steel-dim);border-radius:10px;padding:18px 20px;font-size:.92rem;color:var(--grey);}
   .note strong{display:block;color:var(--steel);font-weight:700;margin-bottom:6px;font-size:.95rem;}
 
+  /* ---------- TRUST BADGES ---------- */
+  .trust-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .trust-chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--grey);border:1px solid var(--line);border-radius:100px;padding:6px 12px;}
+  .trust-chip b{color:var(--paper);font-weight:600;}
+  .trust-note{font-size:.82rem;color:var(--grey);margin-top:10px;}
+
+  /* ---------- PAKKETTEN ---------- */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:780px){.pricing-grid{grid-template-columns:1fr;}}
+  .price-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 26px;}
+  .price-card .tag{display:inline-block;font-weight:700;font-size:.78rem;color:var(--steel);border:1px solid var(--steel-dim);padding:4px 11px;border-radius:100px;margin-bottom:16px;}
+  .price-card h3{font-size:1.3rem;margin-bottom:.15em;}
+  .price-card .price{font-family:'Fraunces';font-weight:600;font-size:1.4rem;color:var(--steel);margin:.3em 0;}
+  .price-card .unit{font-size:.85rem;color:var(--grey);}
+
+  /* ---------- ERVARINGEN ---------- */
+  .video-box{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--grey);background:var(--panel);margin-bottom:28px;}
+  .video-box .play{width:56px;height:56px;border-radius:50%;border:2px solid var(--steel);display:flex;align-items:center;justify-content:center;color:var(--steel);}
+  .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media (max-width:700px){.testi-grid{grid-template-columns:1fr;}}
+  .testi{background:var(--panel);border:1px solid var(--line);padding:26px;border-radius:14px;}
+  .testi p{color:var(--paper);font-family:'Fraunces';font-style:italic;font-weight:500;margin-bottom:14px;}
+  .testi .who{font-size:.88rem;color:var(--grey);}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{display:flex;flex-direction:column;gap:12px;}
+  .faq-item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px;}
+  .faq-item summary{cursor:pointer;font-weight:600;color:var(--paper);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:"+";font-size:1.3rem;color:var(--steel);}
+  .faq-item[open] summary::after{content:"–";}
+  .faq-item p{margin:12px 0 0;}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:40px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-banner h2{margin-bottom:.2em;font-size:1.6rem;}
+  .cta-banner p{margin:0;}
+
   footer{background:var(--ink);color:#586069;padding:24px 0;font-size:.85rem;border-top:1px solid var(--line);}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 </style>
@@ -178,6 +216,8 @@
       <a href="#verloop">De training</a>
       <a href="#olav">Olav</a>
       <a href="#fotos">Foto's</a>
+      <a href="#pakketten">Prijzen</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -259,6 +299,12 @@
         <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span><span>Conditie- en hersteltrainer / looptrainer</span></li>
         <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span><span>Voetbaltrainer/coach KNVB (8–12 jaar)</span></li>
       </ul>
+      <div class="trust-row">
+        <span class="trust-chip"><b>VOG</b> Verklaring Omtrent het Gedrag</span>
+        <span class="trust-chip"><b>Verzekerd</b> WA tijdens trainingen</span>
+        <span class="trust-chip"><b>KVK</b> geregistreerd</span>
+      </div>
+      <p class="trust-note">Gegevens (VOG, KVK-nummer, verzekering) volgen nog.</p>
     </div>
   </div>
 </section>
@@ -278,6 +324,107 @@
   </div>
 </section>
 
+<section id="pakketten" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pakketten &amp; prijzen</span>
+      <h2>Kies wat bij je past</h2>
+      <p>Onderstaande prijzen zijn een indicatie — de definitieve tarieven volgen nog.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="tag">1-op-1</span>
+        <h3>Persoonlijke training</h3>
+        <div class="price">Prijs op aanvraag</div>
+        <div class="unit">per sessie (60 min)</div>
+      </div>
+      <div class="price-card">
+        <span class="tag">Duo</span>
+        <h3>Samen trainen</h3>
+        <div class="price">Prijs op aanvraag</div>
+        <div class="unit">per persoon, per sessie</div>
+      </div>
+      <div class="price-card">
+        <span class="tag">Groep 4–6</span>
+        <h3>Groepstraining</h3>
+        <div class="price">Prijs op aanvraag</div>
+        <div class="unit">per persoon, per sessie</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:24px;">
+      <strong>Nog aan te vullen</strong>
+      Exacte prijzen per sessie of pakket.
+    </div>
+  </div>
+</section>
+
+<section id="ervaringen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Ervaringen</span>
+      <h2>Wat spelers en ouders zeggen</h2>
+      <p>En een kijkje in een training.</p>
+    </div>
+    <div class="video-box">
+      <div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+      <span>Video van een training volgt hier binnenkort</span>
+    </div>
+    <div class="testi-grid">
+      <div class="testi">
+        <p>"Voorbeeldtekst: Olav wist mijn dochter binnen een paar trainingen al veel zelfverzekerder aan de bal te laten voelen."</p>
+        <div class="who">— Naam, ouder van speler (voorbeeld)</div>
+      </div>
+      <div class="testi">
+        <p>"Voorbeeldtekst: Superleerzame en leuke trainingen, precies op mijn niveau."</p>
+        <div class="who">— Naam, speler (voorbeeld)</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:24px;">
+      <strong>Nog toe te voegen</strong>
+      Echte ervaringen van spelers en ouders, en een echte trainingsvideo.
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Veelgestelde vragen</span>
+      <h2>Nog vragen?</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Wat als het regent of sneeuwt?</summary>
+        <p>Bij zwaar weer overleggen we samen of we de training verplaatsen naar een andere dag.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Voor welke leeftijd is dit geschikt?</summary>
+        <p>Vooral gericht op jeugdspelers; in overleg is training voor andere leeftijden ook mogelijk.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Kan ik een gratis proefles boeken?</summary>
+        <p>Ja — neem contact op om een vrijblijvende kennismaking in te plannen.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Train je ook bij mijn eigen club of dichter bij mij in de buurt?</summary>
+        <p>In overleg is training op een andere locatie dan DVC Appingedam mogelijk.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="kennismaking">
+  <div class="wrap">
+    <div class="cta-banner">
+      <div>
+        <h2>Boek een gratis, vrijblijvende kennismaking</h2>
+        <p style="margin:0;">Maak vooraf kennis zonder verplichtingen, en ontdek of de training bij je past.</p>
+      </div>
+      <a href="#contact" class="btn-solid">Plan een kennismaking</a>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <div class="wrap">
     <div>
@@ -288,7 +435,7 @@
       </div>
       <div class="note">
         <strong>Nog aan te vullen</strong>
-        Vaste prijzen per sessie/pakket, of "prijs op aanvraag"? En de links naar Instagram, YouTube en TikTok.
+        De links naar Instagram, YouTube en TikTok.
       </div>
     </div>
     <div class="panel-card">
