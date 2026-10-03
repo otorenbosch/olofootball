@@ -61,9 +61,10 @@
   header{position:sticky;top:0;z-index:20;background:rgba(10,24,38,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
   header .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
   .brand{display:flex;flex-direction:column;line-height:.95;text-decoration:none;}
-  .brand .olo{font-family:'Barlow Condensed';font-weight:800;font-size:1.7rem;color:var(--white);letter-spacing:.02em;}
+  .brand .olo{font-family:'Barlow Condensed';font-weight:800;font-size:2.1rem;color:var(--white);letter-spacing:.06em;}
   .brand .olo b{color:var(--blue);}
-  .brand .sub{font-size:.6rem;letter-spacing:.28em;color:var(--grey);margin-top:2px;}
+  .brand .sub{font-family:'Barlow Condensed';font-weight:600;font-size:.82rem;letter-spacing:.24em;color:var(--blue);margin-top:3px;}
+  @media (max-width:420px){.brand .olo{font-size:1.8rem;}.brand .sub{font-size:.7rem;letter-spacing:.17em;}}
   nav{display:flex;gap:30px;}
   nav a{color:var(--white);text-decoration:none;font-size:.95rem;border-bottom:2px solid transparent;padding-bottom:4px;}
   nav a:hover{border-color:var(--blue);}
@@ -216,8 +217,8 @@
 <header>
   <div class="wrap">
     <a href="#top" class="brand">
-      <span class="olo">OL<b>O</b></span>
-      <span class="sub">FOOTBALL</span>
+      <span class="olo">OL<b>O</b> FOOTBALL</span>
+      <span class="sub">HERE TO INSPIRE OTHERS</span>
     </a>
     <nav>
       <a href="#vormen">Trainingsvormen</a>
@@ -360,7 +361,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>In actie</h2>
-      <p>Een indruk van de trainingen op het veld bij DVC.</p>
+      <p>Een indruk van de trainingen op het veld.</p>
     </div>
     <div class="gallery">
       <div class="shot"><img src="photos/olav-coacht-veld.jpg" alt="Olav geeft instructie aan twee spelers op het veld" loading="lazy"></div>
