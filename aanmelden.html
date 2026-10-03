@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Training aanvragen — OLO Football</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1826; --navy-2:#0F2436; --panel:#132C42; --line:#22475F;
+    --blue:#23B4F0; --blue-dim:#1690C4; --white:#F3F8FB; --grey:#9FB3C2; --err:#FF8A8A;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{margin:0;background:var(--navy);color:var(--white);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.55;overflow-x:hidden;}
+  h1,h2,h3{font-family:'Barlow Condensed',system-ui,sans-serif;font-weight:700;line-height:1.05;letter-spacing:.01em;margin:0 0 .35em;color:var(--white);}
+  h1{font-size:clamp(2.1rem,6vw,2.9rem);}
+  h2{font-size:1.6rem;color:var(--blue);border-bottom:1px solid var(--line);padding-bottom:6px;margin-top:2em;}
+  h3{font-size:1.3rem;margin-top:1.2em;}
+  p{margin:0 0 1em;color:var(--grey);}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+  header{background:rgba(10,24,38,.92);border-bottom:1px solid var(--line);}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:720px;margin:0 auto;}
+  .brand{display:flex;flex-direction:column;line-height:.95;text-decoration:none;}
+  .brand .olo{font-family:'Barlow Condensed';font-weight:800;font-size:1.7rem;letter-spacing:.02em;}
+  .brand .olo b{color:var(--blue);}
+  .brand .sub{font-size:.6rem;letter-spacing:.28em;color:var(--grey);margin-top:2px;}
+  .back{color:var(--grey);text-decoration:none;font-size:.95rem;}
+  .back:hover{color:var(--blue);}
+  main{max-width:720px;margin:0 auto;padding:32px 20px 64px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin:12px 0;color:var(--grey);font-size:.95rem;}
+  .card b{color:var(--white);}
+  .opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:4px;margin:8px 0;cursor:pointer;background:var(--navy-2);}
+  .opt:has(input:checked){border-color:var(--blue);background:rgba(35,180,240,.12);}
+  .opt .mu{color:var(--grey);font-size:.9rem;}
+  .opt b{color:var(--white);}
+  input[type=radio],input[type=checkbox]{accent-color:var(--blue);width:20px;height:20px;flex:none;}
+  input[type=text],input[type=tel],input[type=email],input[type=date],textarea,select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--navy-2);color:var(--white);font:inherit;font-size:16px;margin:4px 0 10px;}
+  input::placeholder,textarea::placeholder{color:#6F8798;}
+  select option{background:var(--navy-2);}
+  .fl{display:block;font-size:.9rem;color:var(--grey);margin-top:10px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin:6px 0 10px;}
+  .chip{display:block;text-align:center;padding:10px 4px;border:1px solid var(--line);border-radius:4px;cursor:pointer;background:var(--navy-2);}
+  .chip b{display:block;color:var(--white);}
+  .chip span{font-size:.85rem;color:var(--grey);}
+  .hid{position:absolute;opacity:0;pointer-events:none;}
+  .hid:checked + .chip{border-color:var(--blue);background:rgba(35,180,240,.15);}
+  .hid:focus-visible + .chip{outline:3px solid var(--blue);outline-offset:2px;}
+  .player{border-left:3px solid var(--blue);padding-left:16px;margin:18px 0;}
+  .err{color:var(--err);font-size:.95rem;margin:10px 0;}
+  .btn{display:inline-block;font-family:'Barlow Condensed';font-weight:700;font-size:1.1rem;letter-spacing:.02em;padding:14px 30px;text-decoration:none;border-radius:3px;border:0;cursor:pointer;background:var(--blue);color:var(--navy);margin:6px 8px 6px 0;}
+  .btn:hover{background:#3fc4fa;}
+  .btn:disabled{opacity:.6;cursor:wait;}
+  .btn.alt{background:transparent;color:var(--white);border:1.5px solid var(--line);}
+  .btn.alt:hover{border-color:var(--blue);background:transparent;}
+  pre{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.92rem;color:var(--white);margin:0;}
+  .ok{border:1px solid var(--blue);background:rgba(35,180,240,.1);padding:18px;border-radius:4px;color:var(--white);}
+  #done,#sent,.pl,#cnt,#extras{display:none;}
+  .website{position:absolute;left:-9999px;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="index.html"><span class="olo">OLO<b>·</b>FOOTBALL</span><span class="sub">PERSOONLIJKE TRAINING</span></a>
+  <a class="back" href="index.html">← Terug naar de site</a>
+</div></header>
+
+<main>
+<h1>Training aanvragen</h1>
+<p>Vul de gegevens in. Na ontvangst bevestig ik de afspraak.</p>
+<div class="card"><b>Let op:</b> OLO Football werkt alleen met leergierige, enthousiaste spelers met een goede houding. Spelers zijn tussen de 8 en 25 jaar.</div>
+
+<div id="form">
+<h2>Training</h2>
+<label class="opt"><input type="radio" name="type" value="1-op-1 training"><span><b>1-op-1</b> · €55<br><span class="mu">Persoonlijke training</span></span></label>
+<label class="opt"><input type="radio" name="type" value="Duotraining"><span><b>Duo</b> · €35 p.p.<br><span class="mu">2 personen</span></span></label>
+<label class="opt"><input type="radio" name="type" value="Groepstraining"><span><b>Groepstraining</b> · vanaf €20 p.p.<br><span class="mu">3 tot 6 personen</span></span></label>
+<div id="cnt"><span class="fl">Aantal personen</span><div class="grid" id="cntgrid"></div></div>
+
+<h2>Locatie</h2>
+<div id="locs"></div>
+
+<h2>Datum en tijd</h2>
+<span class="fl">Kies een datum</span>
+<div class="grid" id="dates"></div>
+<div id="times"></div>
+
+<h2>Speler</h2>
+<div id="p1"></div>
+<span class="fl">Hoe heeft u OLO Football gevonden?</span>
+<input type="text" id="gevonden" placeholder="Bijv. Instagram, vriend, club">
+<span class="fl">Wat verwacht u van OLO Football?</span>
+<textarea id="verwacht" rows="3" placeholder="Uw verwachtingen van de training"></textarea>
+
+<div id="extras"><h2>Andere speler(s)</h2><p>U kunt hier ook de gegevens invullen van het kind van een andere ouder.</p><div id="pextra"></div></div>
+
+<h2>Ouder / verzorger</h2>
+<input type="text" id="ouder" placeholder="Naam ouder / verzorger" autocomplete="name">
+<input type="tel" id="tel" placeholder="Telefoonnummer" autocomplete="tel">
+<input type="email" id="mail" placeholder="E-mailadres" autocomplete="email">
+<label class="opt"><input type="checkbox" id="bel"><span>Bel mij eerst voor een gratis, vrijblijvend kennismakingsgesprek (vul dan een telefoonnummer in).</span></label>
+
+<h2>Voorwaarden</h2>
+<div class="card"><b>Annuleren en betalen</b><br>Annuleren kan tot 24 uur van tevoren, met geld-terug-garantie. Daarna kan er niet meer geannuleerd worden. Betaling gaat via Tikkie.</div>
+<label class="opt"><input type="checkbox" id="ok1"><span>Ik ga akkoord met de annulerings- en betalingsvoorwaarden.</span></label>
+<label class="opt"><input type="checkbox" id="ok2"><span>Ik ga akkoord dat OLO Football de ingevulde gegevens, waaronder medische gegevens, alleen gebruikt voor het organiseren en afstemmen van de training. Zie de <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--blue)">privacyverklaring</a>.</span></label>
+<div class="website" aria-hidden="true"><label>Website <input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn" id="go" type="button">Aanvraag bekijken</button>
+</div>
+
+<div id="done">
+<h2 style="margin-top:0">Controleer uw aanvraag</h2>
+<div class="card"><pre id="sum"></pre></div>
+<div class="err" id="senderr" role="alert"></div>
+<button class="btn" id="send" type="button">Aanvraag versturen</button>
+<button class="btn alt" id="back" type="button">← Aanpassen</button>
+<div id="fallback" style="display:none;margin-top:14px;">
+  <p>Versturen lukt nu niet. Stuur de aanvraag dan op een andere manier:</p>
+  <a class="btn alt" id="wa" target="_blank" rel="noopener">Via WhatsApp</a>
+  <a class="btn alt" id="ml" target="_blank" rel="noopener">Via e-mail</a>
+  <button class="btn alt" id="cp" type="button">Tekst kopiëren</button>
+  <p id="cpm"></p>
+</div>
+</div>
+
+<div id="sent" class="ok">
+  <h2 style="margin-top:0;border:0;">Bedankt!</h2>
+  <p style="color:var(--white)">Uw aanvraag is verstuurd. Ik neem zo snel mogelijk contact met u op om de afspraak te bevestigen.</p>
+  <a class="btn alt" href="index.html">Terug naar de site</a>
+</div>
+</main>
+
+<script>
+// ====== INSTELLINGEN ======
+const CFG={
+  bedrijf:"OLO Football",
+  whatsapp:"31644802542",
+  email:"infoolavoosterhuis@gmail.com",
+  // Webadres van het Google Apps Script (zie apps-script/README.md). Leeg = alleen WhatsApp/e-mail.
+  endpoint:"https://script.google.com/macros/s/AKfycbxGEM-0hJdK_44sJzuh2N3WhYhIv7Bn8ZvPm7fmI3-jlGoCJsNl62VXDKtW4LwTDxcA/exec",
+  locaties:["DVC Appingedam","VV Holwierde","VV Wagenborger Boys"],
+  duur:60,    // minuten per training
+  weken:6,    // aantal weken vooruit boeken
+  // 0=zo 5=vr  -> [eerste start, einde]. Voeg 1-4 toe om andere dagen open te zetten.
+  tijden:{5:["12:45","18:45"],0:["07:30","18:30"]},
+  vrij:[]     // dagen waarop niet geboekt kan worden, bijv. ["2026-12-25"]
+};
+// =========================
+const $=id=>document.getElementById(id);
+const dn=["zo","ma","di","wo","do","vr","za"],mn=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+const m2=s=>{const [h,m]=s.split(":").map(Number);return h*60+m};
+const t2=n=>String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0");
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const eur=n=>"€"+n.toFixed(2).replace(".",",").replace(",00","");
+const GR={3:27.5,4:25,5:22.5,6:20};
+const val=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value;
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+
+// ----- opbouw -----
+function playerHtml(k,extra){
+  const w=extra?`<h3>Speler ${k}</h3>`:"";
+  return `${w}
+<input type="text" id="vn${k}" placeholder="Voornaam"><input type="text" id="an${k}" placeholder="Achternaam">
+<select id="gesl${k}"><option value="">Geslacht</option><option>Jongen / man</option><option>Meisje / vrouw</option><option>Anders</option></select>
+<span class="fl">Geboortedatum (tussen 8 en 25 jaar)</span><input type="date" id="gb${k}">
+<input type="text" id="club${k}" placeholder="Club"><input type="text" id="team${k}" placeholder="Team (bijv. JO13-1)"><input type="text" id="pos${k}" placeholder="Positie">
+<select id="voet${k}"><option value="">Voorkeursvoet</option><option>Rechts</option><option>Links</option><option>Beide</option></select>
+<span class="fl">De 3 verbeterpunten van de speler</span>
+<input type="text" id="v1${k}" placeholder="Verbeterpunt 1"><input type="text" id="v2${k}" placeholder="Verbeterpunt 2"><input type="text" id="v3${k}" placeholder="Verbeterpunt 3">
+<span class="fl">Noem 2 hoofddoelen</span>
+<input type="text" id="d1${k}" placeholder="Hoofddoel 1"><input type="text" id="d2${k}" placeholder="Hoofddoel 2">
+<span class="fl">Zijn er medische bijzonderheden? Hier houd ik rekening mee.</span>
+<textarea id="med${k}" rows="2" placeholder="Bijv. blessure, allergie, astma. Of: geen"></textarea>
+<span class="fl">Mag ${extra?"deze speler":"uw kind"} gefilmd / gefotografeerd worden voor onze website / sociale media kanalen?</span>
+<label class="opt"><input type="radio" name="film${k}" value="Ja"> Ja</label><label class="opt"><input type="radio" name="film${k}" value="Nee"> Nee</label>`
+  +(extra?`<span class="fl"><b>Ouder / verzorger van speler ${k}</b> (leeg laten als dit dezelfde ouder is als hierboven)</span>
+<input type="text" id="ouder${k}" placeholder="Naam ouder / verzorger"><input type="tel" id="tel${k}" placeholder="Telefoonnummer"><input type="email" id="mail${k}" placeholder="E-mailadres">`:"");
+}
+$("p1").innerHTML=playerHtml(1,false);
+for(let k=2;k<=6;k++){const d=document.createElement("div");d.className="player pl";d.id="pl"+k;d.innerHTML=playerHtml(k,true);$("pextra").appendChild(d)}
+$("cntgrid").innerHTML=[3,4,5,6].map(n=>`<div><input type="radio" class="hid" name="aantal" id="n${n}" value="${n}"${n===3?" checked":""}><label class="chip" for="n${n}"><b>${n} personen</b><span>${eur(GR[n])} p.p.</span></label></div>`).join("");
+$("locs").innerHTML=CFG.locaties.map((l,i)=>`<label class="opt"><input type="radio" name="loc" value="${esc(l)}"><span><b>${esc(l)}</b></span></label>`).join("");
+
+// datums en tijden
+const today=new Date();today.setHours(12,0,0,0);
+const days=[];
+for(let i=1;i<=CFG.weken*7;i++){
+  const d=new Date(today);d.setDate(d.getDate()+i);
+  const r=CFG.tijden[d.getDay()];
+  if(r&&!CFG.vrij.includes(iso(d)))days.push({d,iso:iso(d),r});
+}
+$("dates").innerHTML=days.map(x=>`<div><input type="radio" class="hid" name="dag" id="d_${x.iso}" value="${x.iso}"><label class="chip" for="d_${x.iso}"><b>${dn[x.d.getDay()]}</b><span>${x.d.getDate()} ${mn[x.d.getMonth()]}</span></label></div>`).join("");
+function showTimes(){
+  const dag=val("dag");const x=days.find(y=>y.iso===dag);
+  if(!x){$("times").innerHTML="";return}
+  const [a,b]=x.r;const out=[];
+  for(let t=m2(a);t+CFG.duur<=m2(b);t+=CFG.duur)out.push(t2(t));
+  $("times").innerHTML=`<span class="fl">Kies een starttijd op ${dn[x.d.getDay()]} ${x.d.getDate()} ${mn[x.d.getMonth()]} (training duurt ca. ${CFG.duur} min)</span><div class="grid">`
+    +out.map(t=>`<div><input type="radio" class="hid" name="tijd" id="t_${t}" value="${t}"><label class="chip" for="t_${t}"><b>${t}</b></label></div>`).join("")+"</div>";
+}
+
+const nExtra=()=>{const t=val("type");return t==="Duotraining"?1:t==="Groepstraining"?(+val("aantal")-1):0};
+function sync(){
+  $("cnt").style.display=val("type")==="Groepstraining"?"block":"none";
+  const nx=nExtra();
+  $("extras").style.display=nx>0?"block":"none";
+  for(let k=2;k<=6;k++)$("pl"+k).style.display=(k<=nx+1)?"block":"none";
+}
+document.addEventListener("change",e=>{
+  if(e.target.name==="dag")showTimes();
+  if(e.target.name==="type"||e.target.name==="aantal")sync();
+  if(e.target.type==="date")chkAge(e.target);
+});
+document.addEventListener("input",e=>{if(e.target.type==="date")chkAge(e.target)});
+sync();
+
+// leeftijd
+const ageOf=v=>{const b=new Date(v+"T12:00:00"),t=new Date();let a=t.getFullYear()-b.getFullYear();if(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate()))a--;return a};
+const okAge=v=>{if(!v)return false;const a=ageOf(v);return a>=8&&a<=25};
+function chkAge(el){
+  let m=el.nextElementSibling;
+  if(!m||!m.classList.contains("agerr")){m=document.createElement("div");m.className="err agerr";el.after(m)}
+  if(!el.value||el.value.length<10){m.textContent="";return}
+  const a=ageOf(el.value);
+  m.textContent=(a<8||a>25)?"Let op: deze speler is "+(a<0?"nog niet geboren":a+" jaar")+". OLO Football traint alleen spelers van 8 tot en met 25 jaar.":"";
+}
+
+// ----- controleren en samenvatting -----
+let text="",payload=null;
+$("go").onclick=()=>{
+  const type=val("type"),loc=val("loc"),dag=val("dag"),tijd=dag?val("tijd"):"";
+  const vn=$("vn1").value.trim(),an=$("an1").value.trim(),tel=$("tel").value.trim(),mail=$("mail").value.trim(),ouder=$("ouder").value.trim();
+  const fail=m=>{$("err").textContent=m;$("err").scrollIntoView({block:"center"})};
+  if(!$("ok1").checked||!$("ok2").checked)return fail("Ga akkoord met de voorwaarden en de privacyverklaring om door te gaan.");
+  if(!type||!loc||!val("film1")||!vn||!an||!dag||!tijd||!ouder||(!tel&&!mail))return fail("Kies een training, locatie, datum en tijd, beantwoord de vraag over filmen / fotograferen, en vul de naam van de speler en de ouder/verzorger in, met een telefoonnummer of e-mailadres.");
+  if($("bel").checked&&!tel)return fail("Vul een telefoonnummer in als u gebeld wilt worden.");
+  if(mail&&!/^\S+@\S+\.\S+$/.test(mail))return fail("Het e-mailadres lijkt niet te kloppen.");
+  if(!okAge($("gb1").value))return fail("Vul de geboortedatum van speler 1 in. OLO Football traint spelers van 8 tot en met 25 jaar.");
+  const nx=nExtra();
+  for(let k=2;k<=nx+1;k++){
+    if(!$("vn"+k).value.trim()||!$("an"+k).value.trim()||!val("film"+k)||!okAge($("gb"+k).value))
+      return fail("Vul bij elke extra speler de voor- en achternaam en een geboortedatum in (spelers zijn 8 tot en met 25 jaar) en beantwoord de vraag over filmen / fotograferen.");
+  }
+  $("err").textContent="";
+
+  let prijs;
+  if(type==="Groepstraining"){const n=+val("aantal");prijs=`${eur(GR[n])} p.p. (${n} personen)`}
+  else if(type==="Duotraining")prijs="€35 p.p. (2 personen)";
+  else prijs="€55";
+  const x=new Date(dag+"T12:00:00");
+  const dat=dn[x.getDay()]+" "+x.getDate()+" "+mn[x.getMonth()]+" "+x.getFullYear()+", "+tijd+" uur";
+  const g=id=>$(id).value.trim()||"-";
+  const lst=(p,k,n)=>[1,2,3].slice(0,n).map(i=>$(p+i+k).value.trim()).filter(Boolean).map((v,i)=>(i+1)+". "+v).join(" | ")||"-";
+  const speler=k=>["SPELER "+k,"Naam: "+g("vn"+k)+" "+g("an"+k),"Geslacht: "+($("gesl"+k).value||"-"),"Geboortedatum: "+g("gb"+k),"Club: "+g("club"+k),"Team: "+g("team"+k),"Positie: "+g("pos"+k),"Voorkeursvoet: "+($("voet"+k).value||"-"),
+    "Verbeterpunten: "+lst("v",k,3),"Hoofddoelen: "+lst("d",k,2),"Medische bijzonderheden: "+g("med"+k),"Mag gefilmd / gefotografeerd worden: "+val("film"+k)];
+  const lines=["TRAININGSAANVRAAG "+CFG.bedrijf.toUpperCase(),"","TRAINING","Locatie: "+loc,"Soort: "+type,"Prijs: "+prijs,"Datum: "+dat,"",
+    ...speler(1),"Gevonden via: "+g("gevonden"),"Verwachting van OLO Football: "+g("verwacht"),""];
+  for(let k=2;k<=nx+1;k++){
+    lines.push(...speler(k),"Ouder/verzorger: "+($("ouder"+k).value.trim()||"zelfde als speler 1"),"Telefoon: "+($("tel"+k).value.trim()||"-"),"E-mail: "+($("mail"+k).value.trim()||"-"),"");
+  }
+  lines.push("OUDER / VERZORGER (speler 1)","Naam: "+ouder,"Telefoon: "+(tel||"-"),"E-mail: "+(mail||"-"),
+    "Gratis belafspraak gewenst: "+($("bel").checked?"ja":"nee"),"",
+    "AKKOORD","Annulerings- en betalingsvoorwaarden (Tikkie): ja","Privacy / gebruik gegevens: ja");
+  text=lines.join("\n");
+  const subject="Trainingsaanvraag "+vn+" "+an+" – "+dat;
+  const sp=k=>({naam:(g("vn"+k)+" "+g("an"+k)).trim(),geboortedatum:g("gb"+k),club:g("club"+k),team:g("team"+k),positie:g("pos"+k),
+    voet:$("voet"+k).value||"-",verbeterpunten:lst("v",k,3),hoofddoelen:lst("d",k,2),medisch:g("med"+k),gefilmd:val("film"+k),
+    ouder:k===1?ouder:($("ouder"+k).value.trim()||ouder),telefoon:k===1?tel:($("tel"+k).value.trim()||tel),email:k===1?mail:($("mail"+k).value.trim()||mail)});
+  const spelers=[];for(let k=1;k<=nx+1;k++)spelers.push(sp(k));
+  payload={subject,text,replyTo:mail,training:type,prijs,locatie:loc,datum:dat,bel:$("bel").checked?"ja":"nee",
+    gevonden:g("gevonden"),verwachting:g("verwacht"),spelers};
+  $("sum").textContent=text;
+  $("wa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(text);
+  $("ml").href="mailto:"+CFG.email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(text);
+  $("senderr").textContent="";
+  $("fallback").style.display=CFG.endpoint?"none":"block";
+  if(!CFG.endpoint)$("send").style.display="none";
+  $("form").style.display="none";$("done").style.display="block";scrollTo(0,0);
+};
+$("back").onclick=()=>{$("done").style.display="none";$("form").style.display="block"};
+
+// ----- versturen -----
+$("send").onclick=async()=>{
+  if($("website").value)return; // spam-val
+  const b=$("send");b.disabled=true;b.textContent="Bezig met versturen…";$("senderr").textContent="";
+  try{
+    // text/plain voorkomt een CORS-preflight; de respons is bij no-cors niet leesbaar
+    await fetch(CFG.endpoint,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    $("done").style.display="none";$("sent").style.display="block";scrollTo(0,0);
+  }catch(e){
+    b.disabled=false;b.textContent="Aanvraag versturen";
+    $("senderr").textContent="Versturen is niet gelukt. Probeer het opnieuw of stuur de aanvraag via WhatsApp of e-mail.";
+    $("fallback").style.display="block";
+  }
+};
+$("cp").onclick=async()=>{try{await navigator.clipboard.writeText(text);$("cpm").textContent="Gekopieerd ✓"}catch(e){$("cpm").textContent="Selecteer de tekst hierboven en kopieer hem handmatig."}};
+</script>
+</body>
+</html>
