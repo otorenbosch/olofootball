@@ -4,8 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OLO Football — Persoonlijke voetbaltraining Appingedam</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Persoonlijke voetbaltraining in Appingedam, Holwierde en Wagenborgen: 1-op-1, duo of in een kleine groep, voor spelers van 8 tot en met 25 jaar. Here to inspire others.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="OLO Football">
+<meta property="og:title" content="OLO Football — Persoonlijke voetbaltraining">
+<meta property="og:description" content="Persoonlijke voetbaltraining in Appingedam, Holwierde en Wagenborgen: 1-op-1, duo of in een kleine groep, voor spelers van 8 tot en met 25 jaar. Here to inspire others.">
+<meta property="og:image" content="https://otorenbosch.github.io/olofootball/photos/og-image.jpg">
+<meta property="og:image:alt" content="Olav geeft instructie aan twee spelers op het veld">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0A1826">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SportsActivityLocation","name":"OLO Football","description":"Persoonlijke voetbaltraining (1-op-1, duo en groep) voor spelers van 8 tot en met 25 jaar.","slogan":"Here to inspire others","url":"https://otorenbosch.github.io/olofootball/","email":"infoolavoosterhuis@gmail.com","priceRange":"€20 - €55","areaServed":["Appingedam","Holwierde","Wagenborgen"],"sameAs":["https://www.instagram.com/olofootball","https://www.tiktok.com/@olofootball"]}
+</script>
 <style>
   :root{
     --navy:       #0A1826;
@@ -54,7 +67,8 @@
   nav{display:flex;gap:30px;}
   nav a{color:var(--white);text-decoration:none;font-size:.95rem;border-bottom:2px solid transparent;padding-bottom:4px;}
   nav a:hover{border-color:var(--blue);}
-  @media (max-width:700px){nav{display:none;}}
+  header .head-cta{display:none;padding:9px 18px;font-size:1rem;}
+  @media (max-width:700px){nav{display:none;}header .head-cta{display:inline-block;}}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -167,6 +181,11 @@
   .price-card .price{font-family:'Barlow Condensed';font-weight:800;font-size:1.5rem;color:var(--blue);margin:.3em 0;}
   .price-card .unit{font-size:.85rem;color:var(--grey);}
 
+  /* ---------- SLOGAN ---------- */
+  .slogan{background:var(--navy);border-top:1px solid var(--line);padding:56px 0;text-align:center;}
+  .slogan .l1{font-family:'Barlow Condensed';font-weight:800;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.16em;color:var(--white);line-height:1;}
+  .slogan .l2{font-family:'Barlow Condensed';font-weight:600;font-size:clamp(.95rem,2.6vw,1.3rem);letter-spacing:.3em;color:var(--blue);margin-top:10px;}
+
   /* ---------- ERVARINGEN ---------- */
   .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
   @media (max-width:700px){.testi-grid{grid-template-columns:1fr;}}
@@ -209,6 +228,7 @@
       <a href="#contact">Contact</a>
       <a href="aanmelden.html">Aanmelden</a>
     </nav>
+    <a href="aanmelden.html" class="btn btn-primary head-cta">Aanmelden</a>
   </div>
 </header>
 
@@ -501,6 +521,13 @@
         <a href="aanmelden.html" class="btn btn-primary">Naar het aanmeldformulier</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="slogan" aria-label="Slogan">
+  <div class="wrap">
+    <div class="l1">OLO FOOTBALL</div>
+    <div class="l2">HERE TO INSPIRE OTHERS</div>
   </div>
 </section>
 

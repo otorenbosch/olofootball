@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Pagina niet gevonden — OLO Football</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root{--navy:#0A1826;--line:#22475F;--blue:#23B4F0;--white:#F3F8FB;--grey:#9FB3C2;}
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:var(--navy);color:var(--white);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;}
+  .code{font-size:clamp(4rem,18vw,8rem);font-weight:800;letter-spacing:.04em;color:var(--blue);line-height:1;margin:0;}
+  h1{font-size:1.6rem;margin:.3em 0;}
+  p{color:var(--grey);margin:0 0 1.6em;}
+  a.btn{display:inline-block;padding:14px 30px;border-radius:3px;background:var(--blue);color:var(--navy);font-weight:700;text-decoration:none;}
+  a.btn:hover{background:#3fc4fa;}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+</style>
+</head>
+<body>
+<main>
+  <p class="code">404</p>
+  <h1>Deze pagina bestaat niet</h1>
+  <p>De link klopt niet of de pagina is verplaatst.</p>
+  <a class="btn" id="home" href="/">Naar de homepage</a>
+</main>
+<script>
+  // Op github.io staat de site in een submap; op een eigen domein in de hoofdmap
+  if(location.hostname.endsWith("github.io")){
+    var base="/"+(location.pathname.split("/")[1]||"")+"/";
+    document.getElementById("home").href=base;
+    document.querySelector("link[rel=icon]").href=base+"favicon.svg";
+  }
+</script>
+</body>
+</html>
