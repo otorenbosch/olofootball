@@ -165,14 +165,11 @@
   .social{display:flex;gap:18px;margin-top:8px;}
   .social a{color:var(--grey);text-decoration:none;font-size:.92rem;border-bottom:1px solid transparent;}
   .social a:hover{color:var(--blue);border-color:var(--blue);}
-  .todo{border:1px dashed var(--blue-dim);background:rgba(35,180,240,.07);padding:16px 18px;border-radius:3px;font-size:.9rem;color:#BEE6F7;}
-  .todo strong{display:block;color:var(--blue);margin-bottom:4px;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.02em;}
 
   /* ---------- TRUST BADGES ---------- */
   .trust-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
   .trust-chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--grey);border:1px solid var(--line);border-radius:100px;padding:6px 12px;}
   .trust-chip b{color:var(--white);font-weight:600;}
-  .trust-note{font-size:.82rem;color:var(--grey);margin-top:10px;}
 
   /* ---------- PAKKETTEN ---------- */
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
@@ -187,13 +184,6 @@
   .slogan{background:var(--navy);border-top:1px solid var(--line);padding:56px 0;text-align:center;}
   .slogan .l1{font-family:'Barlow Condensed';font-weight:800;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.16em;color:var(--white);line-height:1;}
   .slogan .l2{font-family:'Barlow Condensed';font-weight:600;font-size:clamp(.95rem,2.6vw,1.3rem);letter-spacing:.3em;color:var(--blue);margin-top:10px;}
-
-  /* ---------- ERVARINGEN ---------- */
-  .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-  @media (max-width:700px){.testi-grid{grid-template-columns:1fr;}}
-  .testi{background:var(--panel);border:1px solid var(--line);padding:26px;border-radius:3px;}
-  .testi p{color:var(--white);font-style:italic;margin-bottom:14px;}
-  .testi .who{font-size:.88rem;color:var(--grey);}
 
   /* ---------- FAQ ---------- */
   .faq-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);}
@@ -353,7 +343,6 @@
         <span class="trust-chip"><b>Verzekerd</b> WA tijdens trainingen</span>
         <span class="trust-chip"><b>KVK</b> 42161498</span>
       </div>
-      <p class="trust-note">Gegevens over VOG en verzekering volgen nog.</p>
     </div>
   </div>
 </section>
@@ -421,29 +410,6 @@
         <div class="price">€ 20,00</div>
         <div class="unit">per persoon, per sessie</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="ervaringen">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Ervaringen</h2>
-      <p>Wat spelers en ouders zeggen.</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi">
-        <p>"Voorbeeldtekst: Olav wist mijn dochter binnen een paar trainingen al veel zelfverzekerder aan de bal te laten voelen."</p>
-        <div class="who">— Naam, ouder van speler (voorbeeld)</div>
-      </div>
-      <div class="testi">
-        <p>"Voorbeeldtekst: Superleerzame en leuke trainingen, precies op mijn niveau."</p>
-        <div class="who">— Naam, speler (voorbeeld)</div>
-      </div>
-    </div>
-    <div class="todo" style="margin-top:24px;">
-      <strong>Nog toe te voegen</strong>
-      Echte ervaringen van spelers en ouders (Olav levert ze aan).
     </div>
   </div>
 </section>
