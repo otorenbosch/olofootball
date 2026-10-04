@@ -180,6 +180,13 @@
   .price-card .price{font-family:'Barlow Condensed';font-weight:800;font-size:1.5rem;color:var(--blue);margin:.3em 0;}
   .price-card .unit{font-size:.85rem;color:var(--grey);}
 
+  /* ---------- ERVARINGEN ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media (max-width:700px){.testi-grid{grid-template-columns:1fr;}}
+  .testi{background:var(--panel);border:1px solid var(--line);padding:26px;border-radius:3px;}
+  .testi p{color:var(--white);font-style:italic;margin-bottom:14px;}
+  .testi .who{font-size:.88rem;color:var(--grey);}
+
   /* ---------- SLOGAN ---------- */
   .slogan{background:var(--navy);border-top:1px solid var(--line);padding:56px 0;text-align:center;}
   .slogan .l1{font-family:'Barlow Condensed';font-weight:800;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.16em;color:var(--white);line-height:1;}
@@ -411,6 +418,28 @@
     </div>
   </div>
 </section>
+
+<!-- ERVARINGEN: tijdelijk verborgen tot er echte ervaringen zijn.
+     Haal deze comment-tekens weg en vul de quotes in; voeg eventueel <a href="#ervaringen">Ervaringen</a> toe aan het menu.
+<section id="ervaringen">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Ervaringen</h2>
+      <p>Wat spelers en ouders zeggen.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi">
+        <p>"Quote hier"</p>
+        <div class="who">— Naam, ouder van speler</div>
+      </div>
+      <div class="testi">
+        <p>"Quote hier"</p>
+        <div class="who">— Naam, speler</div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
 
 <section id="faq" style="background:var(--navy-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="wrap">
