@@ -134,7 +134,8 @@
   .trainer{background:var(--navy-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .trainer .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start;}
   @media (max-width:760px){.trainer .wrap{grid-template-columns:1fr;}}
-  .trainer-photo{aspect-ratio:3/4;background:linear-gradient(160deg,var(--panel),var(--navy));border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--grey);font-size:.9rem;padding:16px;}
+  .trainer-photo{aspect-ratio:3/4;background:var(--panel);border:1px solid var(--line);overflow:hidden;}
+  .trainer-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block;}
   .trainer-name.lbl-ic{margin-bottom:10px;}
   .trainer-name{font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:6px;font-family:'Barlow Condensed';font-weight:600;}
   .trainer h2{font-size:2rem;margin-bottom:.15em;}
@@ -336,11 +337,11 @@
 
 <section class="trainer" id="trainer">
   <div class="wrap">
-    <div class="trainer-photo">foto van Olav<br>(nog toe te voegen)</div>
+    <div class="trainer-photo"><img src="photos/olav-portret-stadion.jpg" alt="Portret van Olav Oosterhuis" loading="lazy"></div>
     <div>
       <p class="trainer-name lbl-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4.5 22v-1.5a7.5 7.5 0 0 1 15 0V22"/></svg>Trainer</p>
       <h2>Olav Oosterhuis</h2>
-      <p class="meta">19 jaar &nbsp;·&nbsp; 5 jaar ervaring als trainer</p>
+      <p class="meta"><span id="olav-leeftijd">19</span> jaar &nbsp;·&nbsp; <span id="olav-ervaring">5</span> jaar ervaring als trainer</p>
       <p class="trainer-name lbl-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5 1.8 8.6 12 13.7l10.2-5.1z" fill="currentColor"/><path d="M5.6 11.6v4.4c0 1.6 2.9 3 6.4 3s6.4-1.4 6.4-3v-4.4"/><path d="M22.2 8.6v6.2"/></svg>Diploma's</p>
       <ul class="dipl">
         <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.8 9.4 18 20 6.4"/></svg>Sport- en Bewegingsleider niveau 4</li>
@@ -539,5 +540,14 @@
   </div>
 </footer>
 
+<script>
+/* Leeftijd en ervaring van Olav lopen vanzelf mee. Geboren 8 dec 2006; trainer sinds 1 jan 2021. */
+(function(){
+  function jaren(j,m,d){var n=new Date(),y=n.getFullYear()-j;if(n.getMonth()<m||(n.getMonth()===m&&n.getDate()<d))y--;return y;}
+  var a=document.getElementById('olav-leeftijd'),e=document.getElementById('olav-ervaring');
+  if(a)a.textContent=jaren(2006,11,8);
+  if(e)e.textContent=jaren(2021,0,1);
+})();
+</script>
 </body>
 </html>
