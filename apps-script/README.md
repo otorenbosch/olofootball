@@ -40,4 +40,9 @@ In het Sheet staat een tabblad **Extra dagen** (wordt vanzelf aangemaakt zodra d
 
 ## Dag laten vervallen
 Zet in het tabblad **Vrije dagen** (wordt vanzelf aangemaakt) de **Datum** van de dag waarop niet getraind wordt, bijvoorbeeld `2026-12-25`. Die dag verdwijnt dan uit het aanmeldformulier. De kolom Reden is alleen voor jezelf. Regel verwijderen = dag is weer beschikbaar. Staat een dag zowel in Vrije dagen als in Extra dagen, dan wint Vrije dagen.
-Let op: dit verbergt de dag alleen voor nieuwe aanvragen. Aanvragen die al zijn binnengekomen of bevestigd, moet je zelf afhandelen (Status op Geannuleerd en de ouder laten weten).
+Zet je een dag in dit tabblad, dan verschijnt er een melding met het aantal aanvragen (Nieuw, Gebeld of Bevestigd) op die dag, en die regels kleuren rood in het hoofdtabblad.
+Dit verbergt de dag alleen voor nieuwe aanvragen. Bestaande aanvragen handel je af met de status **Uitgevallen** (zie hieronder).
+
+## Training laten vervallen (status Uitgevallen)
+Zet de Status van een regel op **Uitgevallen**: de ouder krijgt een excuusmail met een link naar het formulier om een nieuwe datum te kiezen, en de tijd komt weer vrij. De rode kleur verdwijnt zodra je de status wijzigt. De mail wordt maar één keer verstuurd per regel; het resultaat staat in de kolom **Uitvalmail verstuurd**.
+Na het bijwerken van `Code.gs`: voer **activeerBevestigingsmail** nog één keer uit (voegt de nieuwe kolom en de status Uitgevallen toe aan de keuzelijst) en implementeer een nieuwe versie.
