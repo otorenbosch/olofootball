@@ -28,3 +28,9 @@ Een gratis Google-account mag ongeveer 100 mails per dag versturen via een scrip
 Zet in het Sheet de **Status** van een aanvraag op **Bevestigd**. Die datum en tijd zijn dan niet meer te kiezen op `aanmelden.html` (binnen een paar seconden na het laden van de pagina). Zet je de status terug (bijvoorbeeld naar Geannuleerd), dan komt de tijd weer vrij.
 - Dit werkt voor aanvragen die zijn binnengekomen nadat `Code.gs` is bijgewerkt, want pas dan worden de kolommen **Dag** en **Tijd** gevuld. Bij oudere regels kun je die twee kolommen met de hand invullen (dag als `2026-10-09`, tijd als `12:45`).
 - Na het bijwerken van `Code.gs` moet je een nieuwe versie implementeren, zie hierboven.
+
+## Bevestigingsmail naar de aanvrager
+Zodra de Status van een regel op **Bevestigd** wordt gezet, krijgt de ouder een bevestigingsmail (met datum, tijd, locatie, annuleringsvoorwaarden en de melding dat er een Tikkie volgt). Antwoorden komen bij Olav terecht.
+- Eenmalig: plak de nieuwe `Code.gs`, kies in Apps Script bovenin de functie **activeerBevestigingsmail** en klik op **Uitvoeren**. Geef toestemming (dit is nodig om mail te mogen sturen en het Sheet te volgen). Implementeer daarna een nieuwe versie van de web-app.
+- Het resultaat staat in de laatste kolom, **Bevestiging verstuurd**: een datum, "Geen e-mailadres" (bel of app dan zelf) of "Mislukt: …".
+- Er wordt maar één mail per regel verstuurd, ook als de status later wisselt. Wil je opnieuw laten versturen, maak dan die cel leeg en zet de status opnieuw op Bevestigd.

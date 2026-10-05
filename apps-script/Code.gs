@@ -6,7 +6,7 @@ const MAX_LENGTE = 30000;                          // bescherming tegen te grote
 
 const KOPPEN = ["Ontvangen", "Status", "Training", "Prijs p.p.", "Locatie", "Datum", "Speler", "Geboortedatum", "Club", "Team",
   "Positie", "Voet", "Verbeterpunten", "Hoofddoelen", "Medisch", "Gefilmd", "Ouder", "Telefoon", "E-mail", "Bel eerst",
-  "Gevonden via", "Verwachting", "Dag", "Tijd"];
+  "Gevonden via", "Verwachting", "Dag", "Tijd", "Bevestiging verstuurd"];
 const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon", "Dag", "Tijd"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
 
 // Het formulier vraagt hiermee op welke tijden al zijn bevestigd, zodat die niet meer te kiezen zijn.
@@ -89,4 +89,54 @@ function maakKoppen(blad) {
 
 function antwoord(status) {
   return ContentService.createTextOutput(status).setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ---- Bevestigingsmail naar de aanvrager ----
+// Eenmalig uitvoeren (zie README): maakt de kolomkop en de trigger aan.
+function activeerBevestigingsmail() {
+  const blad = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  blad.getRange(1, KOPPEN.length).setValue("Bevestiging verstuurd").setFontWeight("bold").setBackground("#0F2436").setFontColor("#FFFFFF");
+  const bestaat = ScriptApp.getProjectTriggers().some(function (t) { return t.getHandlerFunction() === "bijBewerking"; });
+  if (!bestaat) ScriptApp.newTrigger("bijBewerking").forSpreadsheet(SpreadsheetApp.getActive()).onEdit().create();
+}
+
+// Draait bij elke wijziging in het Sheet; doet alleen iets als Status op "Bevestigd" wordt gezet
+function bijBewerking(e) {
+  try {
+    const cel = e && e.range;
+    const blad = cel && cel.getSheet();
+    if (!cel || blad.getIndex() !== 1 || cel.getRow() < 2 || cel.getNumRows() !== 1 || cel.getNumColumns() !== 1) return;
+    if (cel.getColumn() !== KOPPEN.indexOf("Status") + 1 || String(cel.getValue()).trim() !== "Bevestigd") return;
+    const rij = cel.getRow();
+    const v = blad.getRange(rij, 1, 1, KOPPEN.length).getValues()[0];
+    const kol = function (k) { return v[KOPPEN.indexOf(k)]; };
+    const verstuurdCel = blad.getRange(rij, KOPPEN.indexOf("Bevestiging verstuurd") + 1);
+    if (String(kol("Bevestiging verstuurd")).trim()) return; // is al eerder verstuurd
+    const mail = String(kol("E-mail")).trim();
+    if (!/^\S+@\S+\.\S+$/.test(mail)) { verstuurdCel.setValue("Geen e-mailadres"); return; }
+
+    // Meerdere spelers van één aanvraag delen vaak hetzelfde adres: dan maar één mail
+    const alle = blad.getRange(2, 1, blad.getLastRow() - 1, KOPPEN.length).getValues();
+    const dubbel = alle.some(function (r, i) {
+      return i + 2 !== rij && String(r[KOPPEN.indexOf("E-mail")]).trim().toLowerCase() === mail.toLowerCase() &&
+        r[KOPPEN.indexOf("Datum")] === kol("Datum") && String(r[KOPPEN.indexOf("Bevestiging verstuurd")]).indexOf("Verstuurd") === 0;
+    });
+    if (dubbel) { verstuurdCel.setValue("Verstuurd (met andere speler)"); return; }
+
+    const tekst = "Hallo " + (String(kol("Ouder")).trim() || "") + ",\n\n" +
+      "Leuk dat je je hebt aangemeld! Hierbij bevestig ik de training voor " + kol("Speler") + ":\n\n" +
+      "Training: " + kol("Training") + "\n" +
+      "Datum en tijd: " + kol("Datum") + "\n" +
+      "Locatie: " + kol("Locatie") + "\n" +
+      "Prijs: " + kol("Prijs p.p.") + "\n\n" +
+      "Betalen: je ontvangt van mij nog een Tikkie.\n\n" +
+      "Annuleren: dat kan tot 24 uur van tevoren, met geld-terug-garantie. Daarna kan er niet meer geannuleerd worden. " +
+      "Laat het mij dan zo snel mogelijk weten door op deze mail te antwoorden.\n\n" +
+      "Heb je vragen? Antwoord gerust op deze mail.\n\n" +
+      "Tot dan!\n\nSportieve groet,\nOlav\nOLO Football\nhttps://olofootball.nl";
+    MailApp.sendEmail(mail, "Bevestiging training OLO Football – " + kol("Datum"), tekst, { name: "OLO Football" });
+    verstuurdCel.setValue("Verstuurd " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "dd-MM-yyyy HH:mm"));
+  } catch (err) {
+    try { e.range.getSheet().getRange(e.range.getRow(), KOPPEN.length).setValue("Mislukt: " + err.message); } catch (x) {}
+  }
 }
