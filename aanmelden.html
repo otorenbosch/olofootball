@@ -221,7 +221,17 @@ function showTimes(){
 }
 showDates();
 // Bevestigde tijden ophalen; lukt dat niet, dan blijven gewoon alle tijden zichtbaar
-if(CFG.endpoint)fetch(CFG.endpoint).then(r=>r.json()).then(j=>{if(j&&j.bezet){bezet=j.bezet;showDates();showTimes()}}).catch(()=>{});
+// Extra trainingsdagen die Olav in het tabblad "Extra dagen" van het Sheet zet worden hier toegevoegd
+function voegExtraToe(lijst){
+  const morgen=iso(new Date(today.getTime()+864e5));
+  (lijst||[]).forEach(e=>{
+    if(!e||e.datum<morgen||CFG.vrij.includes(e.datum)||!(m2(e.tot)>m2(e.van)))return;
+    const x=days.find(y=>y.iso===e.datum);
+    if(x)x.r=[e.van,e.tot];else days.push({d:new Date(e.datum+"T12:00:00"),iso:e.datum,r:[e.van,e.tot]});
+  });
+  days.sort((a,b)=>a.iso<b.iso?-1:1);
+}
+if(CFG.endpoint)fetch(CFG.endpoint).then(r=>r.json()).then(j=>{if(j){bezet=j.bezet||{};voegExtraToe(j.extra);showDates();showTimes()}}).catch(()=>{});
 
 const nExtra=()=>{const t=val("type");return t==="Duotraining"?1:t==="Groepstraining"?(+val("aantal")-1):0};
 function sync(){
@@ -231,6 +241,7 @@ function sync(){
   for(let k=2;k<=6;k++)$("pl"+k).style.display=(k<=nx+1)?"block":"none";
 }
 document.addEventListener("change",e=>{
+  if(e.target.id==="bel"){$("tel").classList.toggle("req",e.target.checked);if(!e.target.checked)$("tel").classList.remove("bad")}
   if(e.target.name==="dag")showTimes();
   if(e.target.name==="type"||e.target.name==="aantal")sync();
   if(e.target.type==="date")chkAge(e.target);

@@ -24,7 +24,34 @@ function doGet() {
       (bezet[dag] = bezet[dag] || []).push(tijd);
     });
   } catch (err) {}
-  return ContentService.createTextOutput(JSON.stringify({ bezet: bezet })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify({ bezet: bezet, extra: extraDagen() })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Extra trainingsdagen (bijv. in de vakantie) die Olav in het tabblad "Extra dagen" zet: kolommen Datum, Van, Tot.
+// Het tabblad wordt automatisch aangemaakt als het er nog niet is.
+function extraDagen() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let blad = ss.getSheetByName("Extra dagen");
+  if (!blad) {
+    blad = ss.insertSheet("Extra dagen");
+    blad.getRange("A:C").setNumberFormat("@"); // als tekst, zodat 9:00 en datums niet worden omgezet
+    blad.getRange(1, 1, 1, 3).setValues([["Datum", "Van", "Tot"]]).setFontWeight("bold");
+    blad.getRange("E1").setValue("Zet hier extra trainingsdagen, één per regel. Voorbeeld: 2026-10-20 | 09:00 | 17:00");
+    blad.getRange("E2").setValue("Datum als jjjj-mm-dd (of 20-10-2026), tijden als uu:mm. Van = eerste starttijd, Tot = einde van de laatste training.");
+    blad.getRange("E3").setValue("Verwijder een regel om de dag weer te laten vervallen. Oude datums worden vanzelf genegeerd.");
+    blad.setColumnWidths(1, 3, 110);
+  }
+  const uit = [];
+  if (blad.getLastRow() < 2) return uit;
+  blad.getRange(2, 1, blad.getLastRow() - 1, 3).getDisplayValues().forEach(function (r) {
+    const m = String(r[0]).trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$|^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+    const van = String(r[1]).trim().match(/^(\d{1,2}):(\d{2})/), tot = String(r[2]).trim().match(/^(\d{1,2}):(\d{2})/);
+    if (!m || !van || !tot) return;
+    const j = m[1] || m[6], mnd = m[2] || m[5], dag = m[3] || m[4];
+    const p2 = function (x) { return ("0" + x).slice(-2); };
+    uit.push({ datum: j + "-" + p2(mnd) + "-" + p2(dag), van: p2(van[1]) + ":" + van[2], tot: p2(tot[1]) + ":" + tot[2] });
+  });
+  return uit;
 }
 
 // Sheets maakt van "12:45" of "2026-10-09" soms toch een datum; zet dat terug naar tekst

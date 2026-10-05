@@ -34,3 +34,6 @@ Zodra de Status van een regel op **Bevestigd** wordt gezet, krijgt de ouder een 
 - Eenmalig: plak de nieuwe `Code.gs`, kies in Apps Script bovenin de functie **activeerBevestigingsmail** en klik op **Uitvoeren**. Geef toestemming (dit is nodig om mail te mogen sturen en het Sheet te volgen). Implementeer daarna een nieuwe versie van de web-app.
 - Het resultaat staat in de laatste kolom, **Bevestiging verstuurd**: een datum, "Geen e-mailadres" (bel of app dan zelf) of "Mislukt: …".
 - Er wordt maar één mail per regel verstuurd, ook als de status later wisselt. Wil je opnieuw laten versturen, maak dan die cel leeg en zet de status opnieuw op Bevestigd.
+
+## Extra trainingsdagen (bijv. vakantie)
+In het Sheet staat een tabblad **Extra dagen** (wordt vanzelf aangemaakt zodra de nieuwe code is geïmplementeerd en het formulier één keer is geopend). Zet daar per regel: **Datum** (`2026-10-20` of `20-10-2026`), **Van** (eerste starttijd, bijv. `09:00`) en **Tot** (einde van de laatste training, bijv. `17:00`). De dag verschijnt dan binnen een paar seconden in het formulier, met elk uur een starttijd. Regel verwijderen = dag vervalt weer. Staat de datum al in het gewone rooster, dan gelden de tijden uit dit tabblad.
