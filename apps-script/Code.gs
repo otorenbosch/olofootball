@@ -7,7 +7,7 @@ const MAX_LENGTE = 30000;                          // bescherming tegen te grote
 const KOPPEN = ["Ontvangen", "Status", "Training", "Prijs p.p.", "Locatie", "Datum", "Speler", "Geboortedatum", "Club", "Team",
   "Positie", "Voet", "Verbeterpunten", "Hoofddoelen", "Medisch", "Gefilmd", "Ouder", "Telefoon", "E-mail", "Bel eerst",
   "Gevonden via", "Verwachting", "Dag", "Tijd", "Bevestiging verstuurd"];
-const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon", "Dag", "Tijd"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
+const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon", "Prijs p.p.", "Dag", "Tijd"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
 
 // Het formulier vraagt hiermee op welke tijden al zijn bevestigd, zodat die niet meer te kiezen zijn.
 // Alleen datum en tijd worden teruggegeven, geen persoonsgegevens.
@@ -128,7 +128,7 @@ function bijBewerking(e) {
       "Training: " + kol("Training") + "\n" +
       "Datum en tijd: " + kol("Datum") + "\n" +
       "Locatie: " + kol("Locatie") + "\n" +
-      "Prijs: " + kol("Prijs p.p.") + "\n\n" +
+      "Prijs: " + (typeof kol("Prijs p.p.") === "number" ? "€" + kol("Prijs p.p.") : kol("Prijs p.p.")) + "\n\n" +
       "Betalen: je ontvangt van mij nog een Tikkie.\n\n" +
       "Annuleren: dat kan tot 24 uur van tevoren, met geld-terug-garantie. Daarna kan er niet meer geannuleerd worden. " +
       "Laat het mij dan zo snel mogelijk weten door op deze mail te antwoorden.\n\n" +
