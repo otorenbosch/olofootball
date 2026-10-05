@@ -222,6 +222,9 @@ function showTimes(){
 showDates();
 // Bevestigde tijden ophalen; lukt dat niet, dan blijven gewoon alle tijden zichtbaar
 // Extra trainingsdagen die Olav in het tabblad "Extra dagen" van het Sheet zet worden hier toegevoegd
+function haalVrijWeg(lijst){
+  (lijst||[]).forEach(v=>{const i=days.findIndex(y=>y.iso===v);if(i>=0)days.splice(i,1)});
+}
 function voegExtraToe(lijst){
   const morgen=iso(new Date(today.getTime()+864e5));
   (lijst||[]).forEach(e=>{
@@ -231,7 +234,7 @@ function voegExtraToe(lijst){
   });
   days.sort((a,b)=>a.iso<b.iso?-1:1);
 }
-if(CFG.endpoint)fetch(CFG.endpoint).then(r=>r.json()).then(j=>{if(j){bezet=j.bezet||{};voegExtraToe(j.extra);showDates();showTimes()}}).catch(()=>{});
+if(CFG.endpoint)fetch(CFG.endpoint).then(r=>r.json()).then(j=>{if(j){bezet=j.bezet||{};voegExtraToe(j.extra);haalVrijWeg(j.vrij);showDates();showTimes()}}).catch(()=>{});
 
 const nExtra=()=>{const t=val("type");return t==="Duotraining"?1:t==="Groepstraining"?(+val("aantal")-1):0};
 function sync(){

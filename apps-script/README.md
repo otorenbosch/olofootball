@@ -37,3 +37,7 @@ Zodra de Status van een regel op **Bevestigd** wordt gezet, krijgt de ouder een 
 
 ## Extra trainingsdagen (bijv. vakantie)
 In het Sheet staat een tabblad **Extra dagen** (wordt vanzelf aangemaakt zodra de nieuwe code is geïmplementeerd en het formulier één keer is geopend). Zet daar per regel: **Datum** (`2026-10-20` of `20-10-2026`), **Van** (eerste starttijd, bijv. `09:00`) en **Tot** (einde van de laatste training, bijv. `17:00`). De dag verschijnt dan binnen een paar seconden in het formulier, met elk uur een starttijd. Regel verwijderen = dag vervalt weer. Staat de datum al in het gewone rooster, dan gelden de tijden uit dit tabblad.
+
+## Dag laten vervallen
+Zet in het tabblad **Vrije dagen** (wordt vanzelf aangemaakt) de **Datum** van de dag waarop niet getraind wordt, bijvoorbeeld `2026-12-25`. Die dag verdwijnt dan uit het aanmeldformulier. De kolom Reden is alleen voor jezelf. Regel verwijderen = dag is weer beschikbaar. Staat een dag zowel in Vrije dagen als in Extra dagen, dan wint Vrije dagen.
+Let op: dit verbergt de dag alleen voor nieuwe aanvragen. Aanvragen die al zijn binnengekomen of bevestigd, moet je zelf afhandelen (Status op Geannuleerd en de ouder laten weten).

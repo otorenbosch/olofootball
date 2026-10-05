@@ -24,7 +24,7 @@ function doGet() {
       (bezet[dag] = bezet[dag] || []).push(tijd);
     });
   } catch (err) {}
-  return ContentService.createTextOutput(JSON.stringify({ bezet: bezet, extra: extraDagen() })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify({ bezet: bezet, extra: extraDagen(), vrij: vrijeDagen() })).setMimeType(ContentService.MimeType.JSON);
 }
 
 // Extra trainingsdagen (bijv. in de vakantie) die Olav in het tabblad "Extra dagen" zet: kolommen Datum, Van, Tot.
@@ -50,6 +50,30 @@ function extraDagen() {
     const j = m[1] || m[6], mnd = m[2] || m[5], dag = m[3] || m[4];
     const p2 = function (x) { return ("0" + x).slice(-2); };
     uit.push({ datum: j + "-" + p2(mnd) + "-" + p2(dag), van: p2(van[1]) + ":" + van[2], tot: p2(tot[1]) + ":" + tot[2] });
+  });
+  return uit;
+}
+
+// Dagen waarop Olav niet traint, in het tabblad "Vrije dagen": kolom Datum (kolom Reden is voor jezelf).
+// Het tabblad wordt automatisch aangemaakt als het er nog niet is.
+function vrijeDagen() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let blad = ss.getSheetByName("Vrije dagen");
+  if (!blad) {
+    blad = ss.insertSheet("Vrije dagen");
+    blad.getRange("A:B").setNumberFormat("@"); // als tekst, zodat datums niet worden omgezet
+    blad.getRange(1, 1, 1, 2).setValues([["Datum", "Reden (optioneel)"]]).setFontWeight("bold");
+    blad.getRange("D1").setValue("Zet hier dagen waarop er niet getraind wordt, één per regel. Voorbeeld: 2026-12-25 | Kerst");
+    blad.getRange("D2").setValue("Datum als jjjj-mm-dd (of 25-12-2026). De dag verdwijnt dan uit het aanmeldformulier. Verwijder de regel om de dag weer open te zetten.");
+    blad.setColumnWidths(1, 2, 140);
+  }
+  const uit = [];
+  if (blad.getLastRow() < 2) return uit;
+  blad.getRange(2, 1, blad.getLastRow() - 1, 1).getDisplayValues().forEach(function (r) {
+    const m = String(r[0]).trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$|^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+    if (!m) return;
+    const p2 = function (x) { return ("0" + x).slice(-2); };
+    uit.push((m[1] || m[6]) + "-" + p2(m[2] || m[5]) + "-" + p2(m[3] || m[4]));
   });
   return uit;
 }
