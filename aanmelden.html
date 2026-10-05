@@ -194,15 +194,29 @@ for(let i=1;i<=CFG.weken*7;i++){
   const r=CFG.tijden[d.getDay()];
   if(r&&!CFG.vrij.includes(iso(d)))days.push({d,iso:iso(d),r});
 }
-$("dates").innerHTML=days.map(x=>`<div><input type="radio" class="hid" name="dag" id="d_${x.iso}" value="${x.iso}"><label class="chip" for="d_${x.iso}"><b>${dn[x.d.getDay()]}</b><span>${x.d.getDate()} ${mn[x.d.getMonth()]}</span></label></div>`).join("");
+let bezet={}; // bevestigde tijden per datum, opgehaald uit het Google Sheet van Olav
+const vrijeTijden=x=>{
+  const [a,b]=x.r;const out=[];
+  for(let t=m2(a);t+CFG.duur<=m2(b);t+=CFG.duur)if(!(bezet[x.iso]||[]).includes(t2(t)))out.push(t2(t));
+  return out;
+};
+function showDates(){
+  const gekozen=val("dag");
+  $("dates").innerHTML=days.map(x=>{const vol=!vrijeTijden(x).length;
+    return `<div><input type="radio" class="hid" name="dag" id="d_${x.iso}" value="${x.iso}"${vol?" disabled":""}><label class="chip" for="d_${x.iso}"${vol?' style="opacity:.4"':""}><b>${dn[x.d.getDay()]}</b><span>${x.d.getDate()} ${mn[x.d.getMonth()]}${vol?" (vol)":""}</span></label></div>`}).join("");
+  const g=gekozen&&$("d_"+gekozen);if(g&&!g.disabled)g.checked=true;
+}
 function showTimes(){
   const dag=val("dag");const x=days.find(y=>y.iso===dag);
   if(!x){$("times").innerHTML="";return}
-  const [a,b]=x.r;const out=[];
-  for(let t=m2(a);t+CFG.duur<=m2(b);t+=CFG.duur)out.push(t2(t));
+  const gekozen=val("tijd");const out=vrijeTijden(x);
   $("times").innerHTML=`<span class="fl">Kies een starttijd op ${dn[x.d.getDay()]} ${x.d.getDate()} ${mn[x.d.getMonth()]} (training duurt ca. ${CFG.duur} min)</span><div class="grid">`
     +out.map(t=>`<div><input type="radio" class="hid" name="tijd" id="t_${t}" value="${t}"><label class="chip" for="t_${t}"><b>${t}</b></label></div>`).join("")+"</div>";
+  const g=gekozen&&$("t_"+gekozen);if(g)g.checked=true;
 }
+showDates();
+// Bevestigde tijden ophalen; lukt dat niet, dan blijven gewoon alle tijden zichtbaar
+if(CFG.endpoint)fetch(CFG.endpoint).then(r=>r.json()).then(j=>{if(j&&j.bezet){bezet=j.bezet;showDates();showTimes()}}).catch(()=>{});
 
 const nExtra=()=>{const t=val("type");return t==="Duotraining"?1:t==="Groepstraining"?(+val("aantal")-1):0};
 function sync(){
@@ -272,7 +286,7 @@ $("go").onclick=()=>{
     voet:$("voet"+k).value||"-",verbeterpunten:lst("v",k,3),hoofddoelen:lst("d",k,2),medisch:g("med"+k),gefilmd:val("film"+k),
     ouder:k===1?ouder:($("ouder"+k).value.trim()||ouder),telefoon:k===1?tel:($("tel"+k).value.trim()||tel),email:k===1?mail:($("mail"+k).value.trim()||mail)});
   const spelers=[];for(let k=1;k<=nx+1;k++)spelers.push(sp(k));
-  payload={subject,text,replyTo:mail,training:type,prijs,locatie:loc,datum:dat,bel:$("bel").checked?"ja":"nee",
+  payload={subject,text,replyTo:mail,training:type,prijs,locatie:loc,datum:dat,dag,tijd,bel:$("bel").checked?"ja":"nee",
     gevonden:g("gevonden"),verwachting:g("verwacht"),spelers};
   $("sum").textContent=text;
   $("wa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(text);

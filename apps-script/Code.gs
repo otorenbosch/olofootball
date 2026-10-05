@@ -6,8 +6,32 @@ const MAX_LENGTE = 30000;                          // bescherming tegen te grote
 
 const KOPPEN = ["Ontvangen", "Status", "Training", "Prijs p.p.", "Locatie", "Datum", "Speler", "Geboortedatum", "Club", "Team",
   "Positie", "Voet", "Verbeterpunten", "Hoofddoelen", "Medisch", "Gefilmd", "Ouder", "Telefoon", "E-mail", "Bel eerst",
-  "Gevonden via", "Verwachting"];
-const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
+  "Gevonden via", "Verwachting", "Dag", "Tijd"];
+const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon", "Dag", "Tijd"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
+
+// Het formulier vraagt hiermee op welke tijden al zijn bevestigd, zodat die niet meer te kiezen zijn.
+// Alleen datum en tijd worden teruggegeven, geen persoonsgegevens.
+function doGet() {
+  const bezet = {};
+  try {
+    const blad = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    const rijen = blad.getLastRow() > 1 ? blad.getRange(2, 1, blad.getLastRow() - 1, KOPPEN.length).getValues() : [];
+    const iStatus = KOPPEN.indexOf("Status"), iDag = KOPPEN.indexOf("Dag"), iTijd = KOPPEN.indexOf("Tijd");
+    rijen.forEach(function (r) {
+      if (String(r[iStatus]).trim() !== "Bevestigd") return;
+      const dag = celTekst(r[iDag], "yyyy-MM-dd"), tijd = celTekst(r[iTijd], "HH:mm");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dag) || !/^\d{2}:\d{2}$/.test(tijd)) return;
+      (bezet[dag] = bezet[dag] || []).push(tijd);
+    });
+  } catch (err) {}
+  return ContentService.createTextOutput(JSON.stringify({ bezet: bezet })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Sheets maakt van "12:45" of "2026-10-09" soms toch een datum; zet dat terug naar tekst
+function celTekst(v, formaat) {
+  if (v instanceof Date) return Utilities.formatDate(v, Session.getScriptTimeZone(), formaat);
+  return String(v).trim();
+}
 
 function doPost(e) {
   try {
@@ -33,11 +57,14 @@ function doPost(e) {
 function bewaar(d) {
   const blad = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
   if (blad.getLastRow() === 0) maakKoppen(blad);
+  else if (blad.getLastColumn() < KOPPEN.length) { // bestaand Sheet: ontbrekende kolomkoppen aanvullen
+    blad.getRange(1, 1, 1, KOPPEN.length).setValues([KOPPEN]).setFontWeight("bold").setBackground("#0F2436").setFontColor("#FFFFFF");
+  }
   const nu = new Date();
   (d.spelers || []).forEach(function (s) {
     const rij = [nu, "Nieuw", d.training, d.prijs, d.locatie, d.datum, s.naam, s.geboortedatum, s.club, s.team,
       s.positie, s.voet, s.verbeterpunten, s.hoofddoelen, s.medisch, s.gefilmd, s.ouder, s.telefoon, s.email, d.bel,
-      d.gevonden, d.verwachting].map(function (v) { return v === undefined || v === null ? "" : v; });
+      d.gevonden, d.verwachting, d.dag, d.tijd].map(function (v) { return v === undefined || v === null ? "" : v; });
     const nr = blad.getLastRow() + 1;
     TEKSTKOLOMMEN.forEach(function (k) { blad.getRange(nr, KOPPEN.indexOf(k) + 1).setNumberFormat("@"); });
     blad.getRange(nr, 1, 1, rij.length).setValues([rij]);

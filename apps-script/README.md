@@ -23,3 +23,8 @@ Pas `ONTVANGER` bovenin `Code.gs` aan (bijvoorbeeld naar `info@olofootball.nl` z
 
 ## Limieten
 Een gratis Google-account mag ongeveer 100 mails per dag versturen via een script. Dat is ruim genoeg voor aanvragen.
+
+## Tijden blokkeren na bevestiging
+Zet in het Sheet de **Status** van een aanvraag op **Bevestigd**. Die datum en tijd zijn dan niet meer te kiezen op `aanmelden.html` (binnen een paar seconden na het laden van de pagina). Zet je de status terug (bijvoorbeeld naar Geannuleerd), dan komt de tijd weer vrij.
+- Dit werkt voor aanvragen die zijn binnengekomen nadat `Code.gs` is bijgewerkt, want pas dan worden de kolommen **Dag** en **Tijd** gevuld. Bij oudere regels kun je die twee kolommen met de hand invullen (dag als `2026-10-09`, tijd als `12:45`).
+- Na het bijwerken van `Code.gs` moet je een nieuwe versie implementeren, zie hierboven.
