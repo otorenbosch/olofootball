@@ -101,7 +101,7 @@
 <h2>Ouder / verzorger</h2>
 <input type="text" id="ouder" placeholder="Naam ouder / verzorger" autocomplete="name">
 <input type="tel" id="tel" placeholder="Telefoonnummer" autocomplete="tel">
-<input type="email" id="mail" placeholder="E-mailadres" autocomplete="email">
+<input type="email" id="mail" placeholder="E-mailadres (verplicht)" autocomplete="email" required>
 <label class="opt"><input type="checkbox" id="bel"><span>Bel mij eerst voor een gratis, vrijblijvend kennismakingsgesprek (vul dan een telefoonnummer in).</span></label>
 
 <h2>Voorwaarden</h2>
@@ -251,7 +251,7 @@ $("go").onclick=()=>{
   const vn=$("vn1").value.trim(),an=$("an1").value.trim(),tel=$("tel").value.trim(),mail=$("mail").value.trim(),ouder=$("ouder").value.trim();
   const fail=m=>{$("err").textContent=m;$("err").scrollIntoView({block:"center"})};
   if(!$("ok1").checked||!$("ok2").checked)return fail("Ga akkoord met de voorwaarden en de privacyverklaring om door te gaan.");
-  if(!type||!loc||!val("film1")||!vn||!an||!dag||!tijd||!ouder||(!tel&&!mail))return fail("Kies een training, locatie, datum en tijd, beantwoord de vraag over filmen / fotograferen, en vul de naam van de speler en de ouder/verzorger in, met een telefoonnummer of e-mailadres.");
+  if(!type||!loc||!val("film1")||!vn||!an||!dag||!tijd||!ouder||!mail)return fail("Kies een training, locatie, datum en tijd, beantwoord de vraag over filmen / fotograferen, en vul de naam van de speler en de ouder/verzorger in, met een e-mailadres (daar sturen we de bevestiging naartoe).");
   if($("bel").checked&&!tel)return fail("Vul een telefoonnummer in als u gebeld wilt worden.");
   if(mail&&!/^\S+@\S+\.\S+$/.test(mail))return fail("Het e-mailadres lijkt niet te kloppen.");
   if(!okAge($("gb1").value))return fail("Vul de geboortedatum van speler 1 in. OLO Football traint spelers van 8 tot en met 25 jaar.");
