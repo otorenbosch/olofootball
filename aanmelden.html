@@ -60,6 +60,10 @@
   pre{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.92rem;color:var(--white);margin:0;}
   .ok{border:1px solid var(--blue);background:rgba(35,180,240,.1);padding:18px;border-radius:4px;color:var(--white);}
   #done,#sent,.pl,#cnt,#extras{display:none;}
+  .req{border-left:3px solid var(--err) !important;}
+  .rq::after{content:" *";color:var(--err);font-weight:700;}
+  .bad{outline:2px solid var(--err);outline-offset:2px;border-radius:4px;}
+  .reqnote{font-size:.9rem;color:var(--grey);}.reqnote b{color:var(--err);}
   .website{position:absolute;left:-9999px;}
 </style>
 </head>
@@ -72,19 +76,20 @@
 <main>
 <h1>Training aanvragen</h1>
 <p>Vul de gegevens in. Na ontvangst bevestig ik de afspraak.</p>
+<p class="reqnote">Velden met een <b>*</b> of rode rand links zijn verplicht.</p>
 <div class="card"><b>Let op:</b> OLO Football werkt alleen met leergierige, enthousiaste spelers met een goede houding. Spelers zijn tussen de 8 en 25 jaar.</div>
 
 <div id="form">
-<h2>Training</h2>
-<label class="opt"><input type="radio" name="type" value="1-op-1 training"><span><b>1-op-1</b> · €55<br><span class="mu">Persoonlijke training</span></span></label>
+<h2 class="rq">Training</h2>
+<div id="types"><label class="opt"><input type="radio" name="type" value="1-op-1 training"><span><b>1-op-1</b> · €55<br><span class="mu">Persoonlijke training</span></span></label>
 <label class="opt"><input type="radio" name="type" value="Duotraining"><span><b>Duo</b> · €35 p.p.<br><span class="mu">2 personen</span></span></label>
-<label class="opt"><input type="radio" name="type" value="Groepstraining"><span><b>Groepstraining</b> · vanaf €20 p.p.<br><span class="mu">3 tot 6 personen</span></span></label>
+<label class="opt"><input type="radio" name="type" value="Groepstraining"><span><b>Groepstraining</b> · vanaf €20 p.p.<br><span class="mu">3 tot 6 personen</span></span></label></div>
 <div id="cnt"><span class="fl">Aantal personen</span><div class="grid" id="cntgrid"></div></div>
 
-<h2>Locatie</h2>
+<h2 class="rq">Locatie</h2>
 <div id="locs"></div>
 
-<h2>Datum en tijd</h2>
+<h2 class="rq">Datum en tijd</h2>
 <span class="fl">Kies een datum</span>
 <div class="grid" id="dates"></div>
 <div id="times"></div>
@@ -99,15 +104,15 @@
 <div id="extras"><h2>Andere speler(s)</h2><p>U kunt hier ook de gegevens invullen van het kind van een andere ouder.</p><div id="pextra"></div></div>
 
 <h2>Ouder / verzorger</h2>
-<input type="text" id="ouder" placeholder="Naam ouder / verzorger" autocomplete="name">
+<input type="text" id="ouder" class="req" placeholder="Naam ouder / verzorger" autocomplete="name">
 <input type="tel" id="tel" placeholder="Telefoonnummer" autocomplete="tel">
-<input type="email" id="mail" placeholder="E-mailadres (verplicht)" autocomplete="email" required>
+<input type="email" id="mail" class="req" placeholder="E-mailadres" autocomplete="email">
 <label class="opt"><input type="checkbox" id="bel"><span>Bel mij eerst voor een gratis, vrijblijvend kennismakingsgesprek (vul dan een telefoonnummer in).</span></label>
 
 <h2>Voorwaarden</h2>
 <div class="card"><b>Annuleren en betalen</b><br>Annuleren kan tot 24 uur van tevoren, met geld-terug-garantie. Daarna kan er niet meer geannuleerd worden. Betaling gaat via Tikkie.</div>
-<label class="opt"><input type="checkbox" id="ok1"><span>Ik ga akkoord met de annulerings- en betalingsvoorwaarden.</span></label>
-<label class="opt"><input type="checkbox" id="ok2"><span>Ik ga akkoord dat OLO Football de ingevulde gegevens, waaronder medische gegevens, alleen gebruikt voor het organiseren en afstemmen van de training. Zie de <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--blue)">privacyverklaring</a>.</span></label>
+<label class="opt"><input type="checkbox" id="ok1"><span class="rq">Ik ga akkoord met de annulerings- en betalingsvoorwaarden.</span></label>
+<label class="opt"><input type="checkbox" id="ok2"><span class="rq">Ik ga akkoord dat OLO Football de ingevulde gegevens, waaronder medische gegevens, alleen gebruikt voor het organiseren en afstemmen van de training. Zie de <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--blue)">privacyverklaring</a>.</span></label>
 <div class="website" aria-hidden="true"><label>Website <input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn" id="go" type="button">Aanvraag bekijken</button>
@@ -143,7 +148,7 @@ const CFG={
   email:"infoolavoosterhuis@gmail.com",
   // Webadres van het Google Apps Script (zie apps-script/README.md). Leeg = alleen WhatsApp/e-mail.
   endpoint:"https://script.google.com/macros/s/AKfycbxGEM-0hJdK_44sJzuh2N3WhYhIv7Bn8ZvPm7fmI3-jlGoCJsNl62VXDKtW4LwTDxcA/exec",
-  locaties:["DVC Appingedam","VV Holwierde","VV Wagenborger Boys"],
+  locaties:["VV Wagenborger Boys"], // eerder ook: "DVC Appingedam", "VV Holwierde"
   duur:60,    // minuten per training
   weken:6,    // aantal weken vooruit boeken
   // 0=zo 5=vr  -> [eerste start, einde]. Voeg 1-4 toe om andere dagen open te zetten.
@@ -165,9 +170,9 @@ const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"
 function playerHtml(k,extra){
   const w=extra?`<h3>Speler ${k}</h3>`:"";
   return `${w}
-<input type="text" id="vn${k}" placeholder="Voornaam"><input type="text" id="an${k}" placeholder="Achternaam">
+<input type="text" id="vn${k}" class="req" placeholder="Voornaam"><input type="text" id="an${k}" class="req" placeholder="Achternaam">
 <select id="gesl${k}"><option value="">Geslacht</option><option>Jongen / man</option><option>Meisje / vrouw</option><option>Anders</option></select>
-<span class="fl">Geboortedatum (tussen 8 en 25 jaar)</span><input type="date" id="gb${k}">
+<span class="fl rq">Geboortedatum (tussen 8 en 25 jaar)</span><input type="date" id="gb${k}" class="req">
 <input type="text" id="club${k}" placeholder="Club"><input type="text" id="team${k}" placeholder="Team (bijv. JO13-1)"><input type="text" id="pos${k}" placeholder="Positie">
 <select id="voet${k}"><option value="">Voorkeursvoet</option><option>Rechts</option><option>Links</option><option>Beide</option></select>
 <span class="fl">De 3 verbeterpunten van de speler</span>
@@ -176,7 +181,7 @@ function playerHtml(k,extra){
 <input type="text" id="d1${k}" placeholder="Hoofddoel 1"><input type="text" id="d2${k}" placeholder="Hoofddoel 2">
 <span class="fl">Zijn er medische bijzonderheden? Hier houd ik rekening mee.</span>
 <textarea id="med${k}" rows="2" placeholder="Bijv. blessure, allergie, astma. Of: geen"></textarea>
-<span class="fl">Mag ${extra?"deze speler":"uw kind"} gefilmd / gefotografeerd worden voor onze website / sociale media kanalen?</span>
+<span class="fl rq">Mag ${extra?"deze speler":"uw kind"} gefilmd / gefotografeerd worden voor onze website / sociale media kanalen?</span>
 <label class="opt"><input type="radio" name="film${k}" value="Ja"> Ja</label><label class="opt"><input type="radio" name="film${k}" value="Nee"> Nee</label>`
   +(extra?`<span class="fl"><b>Ouder / verzorger van speler ${k}</b> (leeg laten als dit dezelfde ouder is als hierboven)</span>
 <input type="text" id="ouder${k}" placeholder="Naam ouder / verzorger"><input type="tel" id="tel${k}" placeholder="Telefoonnummer"><input type="email" id="mail${k}" placeholder="E-mailadres">`:"");
@@ -184,7 +189,7 @@ function playerHtml(k,extra){
 $("p1").innerHTML=playerHtml(1,false);
 for(let k=2;k<=6;k++){const d=document.createElement("div");d.className="player pl";d.id="pl"+k;d.innerHTML=playerHtml(k,true);$("pextra").appendChild(d)}
 $("cntgrid").innerHTML=[3,4,5,6].map(n=>`<div><input type="radio" class="hid" name="aantal" id="n${n}" value="${n}"${n===3?" checked":""}><label class="chip" for="n${n}"><b>${n} personen</b><span>${eur(GR[n])} p.p.</span></label></div>`).join("");
-$("locs").innerHTML=CFG.locaties.map((l,i)=>`<label class="opt"><input type="radio" name="loc" value="${esc(l)}"><span><b>${esc(l)}</b></span></label>`).join("");
+$("locs").innerHTML=CFG.locaties.map((l,i)=>`<label class="opt"><input type="radio" name="loc" value="${esc(l)}"${CFG.locaties.length===1?" checked":""}><span><b>${esc(l)}</b></span></label>`).join("");
 
 // datums en tijden
 const today=new Date();today.setHours(12,0,0,0);
@@ -230,7 +235,8 @@ document.addEventListener("change",e=>{
   if(e.target.name==="type"||e.target.name==="aantal")sync();
   if(e.target.type==="date")chkAge(e.target);
 });
-document.addEventListener("input",e=>{if(e.target.type==="date")chkAge(e.target)});
+document.addEventListener("input",e=>{if(e.target.type==="date")chkAge(e.target);e.target.classList&&e.target.classList.remove("bad")});
+document.addEventListener("change",e=>{const b=e.target.closest&&e.target.closest(".bad");b&&b.classList.remove("bad")});
 sync();
 
 // leeftijd
@@ -249,7 +255,19 @@ let text="",payload=null;
 $("go").onclick=()=>{
   const type=val("type"),loc=val("loc"),dag=val("dag"),tijd=dag?val("tijd"):"";
   const vn=$("vn1").value.trim(),an=$("an1").value.trim(),tel=$("tel").value.trim(),mail=$("mail").value.trim(),ouder=$("ouder").value.trim();
-  const fail=m=>{$("err").textContent=m;$("err").scrollIntoView({block:"center"})};
+  const fail=m=>{$("err").textContent=m};
+  document.querySelectorAll(".bad").forEach(e=>e.classList.remove("bad"));
+  const bad=el=>el&&el.classList.add("bad");
+  if(!type)bad($("types"));if(!loc)bad($("locs"));if(!dag)bad($("dates"));else if(!tijd)bad($("times"));
+  if(!$("ok1").checked)bad($("ok1").closest(".opt"));if(!$("ok2").checked)bad($("ok2").closest(".opt"));
+  [["ouder",!ouder],["mail",!mail||!/^\S+@\S+\.\S+$/.test(mail)]].forEach(([id,x])=>x&&bad($(id)));
+  for(let k=1;k<=1+nExtra();k++){
+    ["vn","an"].forEach(p=>!$(p+k).value.trim()&&bad($(p+k)));
+    if(!okAge($("gb"+k).value))bad($("gb"+k));
+    if(!val("film"+k))document.querySelectorAll(`input[name=film${k}]`).forEach(r=>bad(r.closest(".opt")));
+  }
+  if($("bel").checked&&!tel)bad($("tel"));
+  const eerste=document.querySelector(".bad");if(eerste)setTimeout(()=>eerste.scrollIntoView({block:"center"}),0);
   if(!$("ok1").checked||!$("ok2").checked)return fail("Ga akkoord met de voorwaarden en de privacyverklaring om door te gaan.");
   if(!type||!loc||!val("film1")||!vn||!an||!dag||!tijd||!ouder||!mail)return fail("Kies een training, locatie, datum en tijd, beantwoord de vraag over filmen / fotograferen, en vul de naam van de speler en de ouder/verzorger in, met een e-mailadres (daar sturen we de bevestiging naartoe).");
   if($("bel").checked&&!tel)return fail("Vul een telefoonnummer in als u gebeld wilt worden.");
