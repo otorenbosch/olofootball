@@ -134,8 +134,8 @@
   /* ---------- TRAINER ---------- */
   .trainer{background:var(--navy-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .trainer .wrap{display:grid;grid-template-columns:.6fr 1.4fr;gap:48px;align-items:stretch;}
-  .trainer-photo{position:relative;min-height:320px;background:var(--panel);border:1px solid var(--line);overflow:hidden;}
-  .trainer-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;opacity:0;transition:opacity .9s ease;}
+  .trainer-photo{position:relative;aspect-ratio:3/4;align-self:start;background:var(--panel);border:1px solid var(--line);overflow:hidden;}
+  .trainer-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;opacity:0;transition:opacity .9s ease;}
   .trainer-photo img.actief{opacity:1;}
   .trainer-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px;z-index:2;}
   .trainer-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1px solid var(--navy-2);background:rgba(255,255,255,.7);cursor:pointer;}
