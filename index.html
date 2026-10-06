@@ -135,7 +135,12 @@
   .trainer{background:var(--navy-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .trainer .wrap{display:grid;grid-template-columns:.6fr 1.4fr;gap:48px;align-items:stretch;}
   .trainer-photo{position:relative;min-height:320px;background:var(--panel);border:1px solid var(--line);overflow:hidden;}
-  .trainer-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;display:block;}
+  .trainer-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;opacity:0;transition:opacity .9s ease;}
+  .trainer-photo img.actief{opacity:1;}
+  .trainer-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px;z-index:2;}
+  .trainer-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1px solid var(--navy-2);background:rgba(255,255,255,.7);cursor:pointer;}
+  .trainer-dots button.actief{background:var(--navy-2);}
+  @media (prefers-reduced-motion:reduce){.trainer-photo img{transition:none;}}
   @media (max-width:760px){.trainer .wrap{grid-template-columns:1fr;}.trainer-photo{aspect-ratio:3/4;max-width:340px;}.trainer-photo img{position:absolute;}}
   .trainer-name.lbl-ic{margin-bottom:10px;}
   .trainer-name{font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:6px;font-family:'Barlow Condensed';font-weight:600;}
@@ -335,7 +340,11 @@
 
 <section class="trainer" id="trainer">
   <div class="wrap">
-    <div class="trainer-photo"><img src="photos/olav-portret.jpg" alt="Portret van Olav Oosterhuis" loading="lazy"></div>
+    <div class="trainer-photo" id="trainer-foto">
+      <img class="actief" src="photos/olav-voor.jpg" alt="Portret van Olav Oosterhuis in OLO-jas" width="900" height="1200" loading="lazy">
+      <img src="photos/olav-achter.jpg" alt="Olav van achteren, met op de jas OLO Football – Here to inspire others" width="900" height="1200" loading="lazy">
+      <div class="trainer-dots"><button type="button" class="actief" aria-label="Foto voorkant"></button><button type="button" aria-label="Foto achterkant"></button></div>
+    </div>
     <div>
       <p class="trainer-name lbl-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4.5 22v-1.5a7.5 7.5 0 0 1 15 0V22"/></svg>Trainer</p>
       <h2>Olav Oosterhuis</h2>
@@ -541,6 +550,17 @@
   var a=document.getElementById('olav-leeftijd'),e=document.getElementById('olav-ervaring');
   if(a)a.textContent=jaren(2006,11,8);
   if(e)e.textContent=jaren(2021,0,1);
+})();
+/* Profielfoto's wisselen elke 5 seconden; stopt bij hover en bij 'minder beweging'. */
+(function(){
+  var box=document.getElementById('trainer-foto');if(!box)return;
+  var imgs=box.querySelectorAll('img'),dots=box.querySelectorAll('.trainer-dots button'),i=0,t;
+  function toon(n){i=n;imgs.forEach(function(im,k){im.classList.toggle('actief',k===i);});dots.forEach(function(d,k){d.classList.toggle('actief',k===i);});}
+  function start(){stop();if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;t=setInterval(function(){toon((i+1)%imgs.length);},5000);}
+  function stop(){clearInterval(t);}
+  dots.forEach(function(d,k){d.addEventListener('click',function(){toon(k);start();});});
+  box.addEventListener('mouseenter',stop);box.addEventListener('mouseleave',start);
+  start();
 })();
 </script>
 </body>
