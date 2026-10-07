@@ -82,7 +82,7 @@
 <div id="form">
 <h2 class="rq">Training</h2>
 <div id="types"><label class="opt"><input type="radio" name="type" value="1-op-1 training"><span><b>1-op-1</b> · €62,50<br><span class="mu">Persoonlijke training</span></span></label>
-<label class="opt"><input type="radio" name="type" value="Duotraining"><span><b>Duo</b> · €35,00 p.p.<br><span class="mu">2 personen · totaal €70,00</span></span></label>
+<label class="opt"><input type="radio" name="type" value="Duotraining"><span><b>Duo</b> · €35,00 p.p.<br><span class="mu">2 personen</span></span></label>
 <label class="opt"><input type="radio" name="type" value="Groepstraining"><span><b>Groepstraining</b> · vanaf €15,00 p.p.<br><span class="mu">3 tot 6 personen</span></span></label></div>
 <div id="cnt"><span class="fl">Aantal personen</span><div class="grid" id="cntgrid"></div></div>
 
@@ -188,7 +188,7 @@ function playerHtml(k,extra){
 }
 $("p1").innerHTML=playerHtml(1,false);
 for(let k=2;k<=6;k++){const d=document.createElement("div");d.className="player pl";d.id="pl"+k;d.innerHTML=playerHtml(k,true);$("pextra").appendChild(d)}
-$("cntgrid").innerHTML=[3,4,5,6].map(n=>`<div><input type="radio" class="hid" name="aantal" id="n${n}" value="${n}"${n===3?" checked":""}><label class="chip" for="n${n}"><b>${n} personen</b><span>${eur(GR[n])} p.p.<br>totaal ${eur(GR[n]*n)}</span></label></div>`).join("");
+$("cntgrid").innerHTML=[3,4,5,6].map(n=>`<div><input type="radio" class="hid" name="aantal" id="n${n}" value="${n}"${n===3?" checked":""}><label class="chip" for="n${n}"><b>${n} personen</b><span>${eur(GR[n])} p.p.</span></label></div>`).join("");
 $("locs").innerHTML=CFG.locaties.map((l,i)=>`<label class="opt"><input type="radio" name="loc" value="${esc(l)}"${CFG.locaties.length===1?" checked":""}><span><b>${esc(l)}</b></span></label>`).join("");
 
 // datums en tijden
@@ -295,8 +295,8 @@ $("go").onclick=()=>{
   $("err").textContent="";
 
   let prijs;
-  if(type==="Groepstraining"){const n=+val("aantal");prijs=`${eur(GR[n])} p.p. (${n} personen, totaal ${eur(GR[n]*n)})`}
-  else if(type==="Duotraining")prijs="€35,00 p.p. (2 personen, totaal €70,00)";
+  if(type==="Groepstraining"){const n=+val("aantal");prijs=`${eur(GR[n])} p.p. (${n} personen)`}
+  else if(type==="Duotraining")prijs="€35,00 p.p. (2 personen)";
   else prijs="€62,50";
   const x=new Date(dag+"T12:00:00");
   const dat=dn[x.getDay()]+" "+x.getDate()+" "+mn[x.getMonth()]+" "+x.getFullYear()+", "+tijd+" uur";
