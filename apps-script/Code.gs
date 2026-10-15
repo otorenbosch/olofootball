@@ -6,13 +6,18 @@ const MAX_LENGTE = 30000;                          // bescherming tegen te grote
 
 const KOPPEN = ["Ontvangen", "Status", "Training", "Prijs p.p.", "Locatie", "Datum", "Speler", "Geboortedatum", "Club", "Team",
   "Positie", "Voet", "Verbeterpunten", "Hoofddoelen", "Medisch", "Gefilmd", "Ouder", "Telefoon", "E-mail", "Bel eerst",
-  "Gevonden via", "Verwachting", "Dag", "Tijd", "Bevestiging verstuurd", "Uitvalmail verstuurd"];
+  "Gevonden via", "Verwachting", "Dag", "Tijd", "Bevestiging verstuurd", "Uitvalmail verstuurd", "Groep"];
 const STATUSSEN = ["Nieuw", "Gebeld", "Bevestigd", "Afgerond", "Geannuleerd", "Uitgevallen"];
 const TEKSTKOLOMMEN = ["Geboortedatum", "Telefoon", "Prijs p.p.", "Dag", "Tijd"]; // als tekst bewaren, zodat 0612… en datums niet worden omgezet
 
 // Het formulier vraagt hiermee op welke tijden al zijn bevestigd, zodat die niet meer te kiezen zijn.
 // Alleen datum en tijd worden teruggegeven, geen persoonsgegevens.
-function doGet() {
+function doGet(e) {
+  // ?groep=CODE: alleen het aantal aanmeldingen van die groep (geen persoonsgegevens)
+  const code = e && e.parameter && e.parameter.groep;
+  if (code) {
+    return ContentService.createTextOutput(JSON.stringify({ aantal: /^G-[A-Z0-9]{6}$/.test(code) ? groepAantal(code) : 0 })).setMimeType(ContentService.MimeType.JSON);
+  }
   const bezet = {};
   try {
     const blad = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
@@ -92,17 +97,53 @@ function doPost(e) {
     const d = JSON.parse(raw);
     if (!d.text || !d.subject) return antwoord("fout");
 
-    bewaar(d);
+    d.groep = /^G-[A-Z0-9]{6}$/.test(String(d.groep || "")) ? String(d.groep) : "";
+
+    // Slot: twee ouders die tegelijk aanmelden mogen de telling niet door elkaar halen
+    const slot = LockService.getScriptLock();
+    slot.waitLock(20000);
+    let stand = { regel: "", onderwerp: "" };
+    try {
+      bewaar(d);
+      stand = groepStand(d);
+    } finally {
+      slot.releaseLock();
+    }
 
     // Mailen naar Olav; antwoorden gaat naar de ouder
     const opties = { name: "OLO Football website" };
     if (d.replyTo && /^\S+@\S+\.\S+$/.test(d.replyTo)) opties.replyTo = d.replyTo;
-    MailApp.sendEmail(ONTVANGER, String(d.subject).slice(0, 200), String(d.text), opties);
+    MailApp.sendEmail(ONTVANGER, (String(d.subject).slice(0, 180) + stand.onderwerp), stand.regel + String(d.text), opties);
 
     return antwoord("ok");
   } catch (err) {
     return antwoord("fout");
   }
+}
+
+// Aantal aangemelde spelers met deze groepscode (geannuleerd en uitgevallen tellen niet mee)
+function groepAantal(code) {
+  const blad = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  if (blad.getLastRow() < 2) return 0;
+  const iGroep = KOPPEN.indexOf("Groep"), iStatus = KOPPEN.indexOf("Status");
+  if (blad.getLastColumn() <= iGroep) return 0;
+  return blad.getRange(2, 1, blad.getLastRow() - 1, iGroep + 1).getValues().filter(function (r) {
+    return String(r[iGroep]).trim() === code && ["Geannuleerd", "Uitgevallen"].indexOf(String(r[iStatus]).trim()) < 0;
+  }).length;
+}
+
+// Bij een duo/groep met meerdere ouders: hoeveel plekken zijn nu aangemeld? Voor het mailonderwerp en de eerste regel van de mail.
+function groepStand(d) {
+  if (!d.groep) return { regel: "", onderwerp: "" };
+  const aantal = groepAantal(d.groep), grootte = Number(d.groepGrootte) || 0;
+  if (!grootte) return { regel: "GROEP " + d.groep + ": " + aantal + " aangemeld.\n\n", onderwerp: "" };
+  const nog = grootte - aantal;
+  return {
+    onderwerp: nog > 0 ? " – wacht op " + nog + " aanmelding" + (nog === 1 ? "" : "en") : nog === 0 ? " – groep compleet" : " – groep was al vol",
+    regel: "GROEP " + d.groep + ": " + aantal + " van " + grootte + " aangemeld" +
+      (nog > 0 ? ", nog " + nog + " nodig" : nog === 0 ? ", de groep is compleet, je kunt bevestigen" : ", LET OP: meer aanmeldingen dan plekken") +
+      ". Zoek op deze code in de kolom Groep voor de andere ouders.\n\n"
+  };
 }
 
 // Eén regel per speler in het Sheet (reservekopie en overzicht)
@@ -121,6 +162,7 @@ function bewaar(d) {
     TEKSTKOLOMMEN.forEach(function (k) { blad.getRange(nr, KOPPEN.indexOf(k) + 1).setNumberFormat("@"); });
     blad.getRange(nr, 1, 1, rij.length).setValues([rij]);
     blad.getRange(nr, 1).setNumberFormat("dd-MM-yyyy HH:mm");
+    if (d.groep) blad.getRange(nr, KOPPEN.indexOf("Groep") + 1).setValue(d.groep);
   });
 }
 

@@ -46,3 +46,13 @@ Dit verbergt de dag alleen voor nieuwe aanvragen. Bestaande aanvragen handel je 
 ## Training laten vervallen (status Uitgevallen)
 Zet de Status van een regel op **Uitgevallen**: de ouder krijgt een excuusmail met een link naar het formulier om een nieuwe datum te kiezen, en de tijd komt weer vrij. De rode kleur verdwijnt zodra je de status wijzigt. De mail wordt maar één keer verstuurd per regel; het resultaat staat in de kolom **Uitvalmail verstuurd**.
 Na het bijwerken van `Code.gs`: voer **activeerBevestigingsmail** nog één keer uit (voegt de nieuwe kolom en de status Uitgevallen toe aan de keuzelijst) en implementeer een nieuwe versie.
+
+## Duo en groep: elke ouder meldt zijn eigen kind aan
+Kiest iemand Duo of Groepstraining, dan vult de ouder **Speler 1** in. Bij elke volgende speler staat een keuze: *"Ik vul deze speler zelf in"* (standaard, werkt als vanouds, bijvoorbeeld voor broertjes) of *"De ouder van deze speler vult dit zelf in"*.
+- Kiest de ouder het laatste, dan krijgt hij/zij na het versturen een **link** (WhatsApp of kopiëren). De andere ouder opent de link, ziet de training, datum, tijd en locatie vastgezet en "Al aangemeld: X van Y", en vult alleen het eigen kind in.
+- Alle aanmeldingen van die training krijgen dezelfde code in de kolom **Groep** (bijv. `G-K7P2QX`). Zo zie je in het Sheet wie bij elkaar hoort (filter of sorteer op die kolom).
+- In het mailonderwerp staat "wacht op X aanmelding(en)" zolang niet alle plekken zijn ingevuld, en "groep compleet" zodra de laatste is aangemeld. Bovenaan de mail staat de stand.
+- Elke ouder (en elk kind) staat op een eigen regel met een eigen status. Zet de status per regel op **Bevestigd**: elke ouder krijgt dan een eigen bevestigingsmail en Tikkie. Een tijd gaat pas dicht zodra een regel op Bevestigd staat.
+- Geannuleerd en Uitgevallen tellen niet mee in "X van Y".
+- Is de groep al vol, dan kan een extra ouder zich nog wel aanmelden (met een waarschuwing). Jij beslist dan wat er kan.
+- Na het bijwerken van `Code.gs`: plak de code, voer **activeerBevestigingsmail** één keer uit en implementeer een nieuwe versie (zie hierboven). De kolom Groep wordt vanzelf toegevoegd.
